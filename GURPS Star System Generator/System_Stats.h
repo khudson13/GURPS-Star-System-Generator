@@ -6,8 +6,11 @@ class System_Stats
 {
 private:
 	int num_of_stars;
+	std::random_device rando;  // obtain random number from hardware for rng seed
+	
 
 public:
+
 	// return number of stars in system
 	int num_Stars();
 
@@ -30,7 +33,9 @@ int System_Stats::num_Stars()
 
 void System_Stats::gen_Stars()
 {
-	std::random_device rando;  // obtain random number from hardware
+	int roll_3D6{ 0 }; // result of roll
+
 	std::mt19937 gen(rando()); // seed the generator
-	std::uniform_int_distribution<> distr(25, 63); // define the range
+	std::uniform_int_distribution<> distr(3, 18); // define the range
+	roll_3D6 = distr(gen);
 }
