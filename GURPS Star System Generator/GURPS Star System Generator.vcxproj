@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dice.cpp" />
     <ClCompile Include="GURPS Star System Generator.cpp" />
-    <ClCompile Include="System_Stats.cpp" />
+    <ClCompile Include="SystemStats.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="System_Stats.h" />
+    <ClInclude Include="Dice.h" />
+    <ClInclude Include="SystemStats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

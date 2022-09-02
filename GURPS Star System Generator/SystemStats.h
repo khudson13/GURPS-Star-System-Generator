@@ -1,12 +1,11 @@
 #pragma once
 
-#include <random>
+#include "DICE.h"
 
-class System_Stats
+class SystemStats
 {
 private:
 	int num_of_stars;
-	std::random_device rando;  // obtain random number from hardware for rng seed
 	
 	// set number of stars in system
 	void set_Stars(int);

@@ -1,24 +1,24 @@
-#include "System_Stats.h"
+#include "SystemStats.h"
 
 //*********************
 // METHOD DEFINITIONS *
 //*********************
 
 // get number of stars
-int System_Stats::num_Stars()
+int SystemStats::num_Stars()
 {
 	return num_of_stars;
 }
 
 // generate number of stars
-void System_Stats::gen_Stars()
+void SystemStats::gen_Stars()
 {
 	int roll_3D6{ 0 }; // result of roll
 
 	// roll 3D6
-	std::mt19937 gen(rando()); // seed the generator
-	std::uniform_int_distribution<> distr(3, 18); // define the range
-	roll_3D6 = distr(gen);
+	
+	
+	roll_3D6 = Dice::roll_D6(3);
 
 	// interpret roll
 	if (roll_3D6 >= 3 && roll_3D6 <= 10)
@@ -36,7 +36,7 @@ void System_Stats::gen_Stars()
 }
 
 // set number of stars
-void System_Stats::set_Stars(int x)
+void SystemStats::set_Stars(int x)
 {
 	num_of_stars = x;
 }
