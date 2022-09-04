@@ -1,13 +1,33 @@
 #include "SystemStats.h"
+#include <iostream>
+#include "Dice.h"
 
 //*********************
 // METHOD DEFINITIONS *
 //*********************
 
+SystemStats::SystemStats()
+{
+	char response{ ' ' }; // store user's yes/no
+	std::cout << "Does this system include a pregenerated garden world? (y/n): ";
+	std::cin >> response;
+	// ADD ERROR HANDLING AND CLEAR THE STREAM
+	if (response == 'y' || response == 'Y')
+	{
+		pregen_garden_planet = true;
+	}
+}
+
 // get number of stars
-int SystemStats::num_Stars()
+int SystemStats::Get_Num_Stars()
 {
 	return num_of_stars;
+}
+
+// get status of pregen garden planet
+bool SystemStats::get_Garden_Planet_Status()
+{
+	return pregen_garden_planet;
 }
 
 // generate number of stars

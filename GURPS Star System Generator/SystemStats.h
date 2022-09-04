@@ -1,19 +1,35 @@
 #pragma once
 
-#include "DICE.h"
+#include <vector>
+
+// GENERAL DATA ABOUT SOLAR SYSTEM
+// VECTORS LISTING STARS, PLANETS, ETC
 
 class SystemStats
 {
 private:
 	int num_of_stars;
+	// *** DEFINE VECTOR OF STARS HERE ***
+	// *** DEFINE VECTOR OF PLANETS HERE ***
+
+	//*****************************************
+	// FOR SYSTEMS WITH A PREGENERATED PLANET *
+	//*****************************************
+	bool pregen_garden_planet{ false };	// is there a pregenerated garden planet?
 	
 	// set number of stars in system
 	void set_Stars(int);
 
 public:
+
+	// constructor
+	SystemStats();
 	
 	// return number of stars in system
-	int num_Stars();
+	int Get_Num_Stars();
+
+	// return presence of pregenerated garden planet
+	bool get_Garden_Planet_Status();
 
 	//********************
 	// SYSTEM GENERATORS *

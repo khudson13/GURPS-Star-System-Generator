@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 
+// STATIC CLASS SIMULATING DICE ROLLS
 class Dice
 {
 private:
