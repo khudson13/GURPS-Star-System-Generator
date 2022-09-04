@@ -185,7 +185,34 @@ void Star::gen_Mass(bool garden_planet_present)
 
 	else if (get_Primary != nullptr)	// companion mass generator
 	{
+		int difference_roll{ Dice::roll_D6(1) - 1 }; // value to establish difference between primary and secondary
+		int steps_down{ 0 };	// how many steps down mass chart (pg. 101 GURPS Space) from primary star mass
+		double companion_mass;	// companion mass accumulator and final value
+		
+		if (difference_roll == 0) // same mass
+		{
+			stellar_mass = get_Primary()->stellar_mass;
+		}
+		else
+		{
+			steps_down = Dice::roll_D6(difference_roll);
 
+			// calculate companion mass
+			companion_mass = get_Primary()->get_Mass();
+			for (int i{ 0 }; i < steps_down; ++i)
+			{
+				if (companion_mass >= 1.6)
+				{
+					companion_mass -= 0.1;
+				}
+				else if (companion_mass > 0.1)
+				{
+					companion_mass -= 0.05;
+				}
+			}
+
+			stellar_mass = companion_mass;
+		}
 	}
 
 	else // special mass generator guarantees favorable environment for garden planet
