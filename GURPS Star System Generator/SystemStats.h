@@ -8,9 +8,10 @@
 class SystemStats
 {
 private:
-	int num_of_stars;
+	int num_of_stars{ 0 };
 	// *** DEFINE VECTOR OF STARS HERE ***
 	// *** DEFINE VECTOR OF PLANETS HERE ***
+	// *** MOON VECTORS ARE STORED WTIH THEIR ASSOCIATED PLANETS ***
 
 	//*****************************************
 	// FOR SYSTEMS WITH A PREGENERATED PLANET *

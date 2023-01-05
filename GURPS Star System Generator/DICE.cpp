@@ -1,5 +1,7 @@
 #include "DICE.h"
 
+// IMPLEMENTATION OF STATIC DICE CLASS
+
 int Dice::roll_D6(int num_of_rolls)
 {
 	int roll_value{ 0 }; // cumulative value of roll
