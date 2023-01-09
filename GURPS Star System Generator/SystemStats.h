@@ -17,6 +17,7 @@ private:
 	// FOR SYSTEMS WITH A PREGENERATED PLANET *
 	//*****************************************
 	bool pregen_garden_planet{ false };	// is there a pregenerated garden planet?
+	float system_age{ 0 };				// age of system
 	
 	// set number of stars in system
 	void set_Stars(int);
@@ -26,8 +27,11 @@ public:
 	// constructor
 	SystemStats();
 	
+	// get age
+	float get_Age();
+
 	// return number of stars in system
-	int Get_Num_Stars();
+	int get_Num_Stars();
 
 	// return presence of pregenerated garden planet
 	bool get_Garden_Planet_Status();
@@ -38,5 +42,8 @@ public:
 
 	// populate system stars
 	void gen_Stars();
+
+	// define age of system
+	void define_Age();
 };
 
