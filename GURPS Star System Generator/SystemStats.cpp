@@ -7,7 +7,7 @@
 //*********************
 
 //***************
-// CONSTRUCtORS *
+// CONSTRUCTORS *
 //***************
 SystemStats::SystemStats()
 {
@@ -19,11 +19,21 @@ SystemStats::SystemStats()
 	{
 		pregen_garden_planet = true;
 	}
+	
+	// run generator functs
+	SystemStats::set_Num_of_Stars();
+	SystemStats::define_Age();
 }
 
 //*****************
 // OUTPUT METHODS *
 //*****************
+
+// get age
+float SystemStats::get_Age()
+{
+	return SystemStats::system_age;
+}
 
 // get whether or not a pregen garden planet exists
 bool SystemStats::get_Garden_Planet_Status()
@@ -32,7 +42,7 @@ bool SystemStats::get_Garden_Planet_Status()
 }
 
 // get number of stars
-int SystemStats::get_Num_Stars()
+int SystemStats::get_Num_of_Stars()
 {
 	return num_of_stars;
 }
@@ -114,14 +124,9 @@ void SystemStats::define_Age()
 }
 
 // generate number of stars
-void SystemStats::gen_Stars()
+void SystemStats::set_Num_of_Stars()
 {
-	int roll_3D6{ 0 }; // result of roll
-
-	// roll 3D6
-	
-	
-	roll_3D6 = Dice::roll_D6(3);
+	int roll_3D6{ Dice::roll_D6(3) }; // result of roll
 
 	// interpret roll
 	if (roll_3D6 >= 3 && roll_3D6 <= 10)

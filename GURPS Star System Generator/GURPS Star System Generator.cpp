@@ -6,9 +6,22 @@ Plan to handle each selestial object as its own class, including a class to hand
 a whole.
 */
 
+//********************
+// STANDARD INCLUDES *
+//********************
 #include <iostream>
+
+//********************
+// PERSONAL INCLUDES *
+//********************
+
+#include "SystemStats.h"
+#include "Star.h"
+#include "Planet.h"
+
 
 int main()
 {
-    
+    SystemStats NewSystem;
+
 }

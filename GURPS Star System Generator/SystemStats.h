@@ -24,14 +24,22 @@ private:
 
 public:
 
+	//***************
+	// CONSTRUCTORS *
+	//***************
+
 	// constructor
 	SystemStats();
+	
+	//**********************
+	// VALUE OUTPUT FUNCTS *
+	//**********************
 	
 	// get age
 	float get_Age();
 
 	// return number of stars in system
-	int get_Num_Stars();
+	int get_Num_of_Stars();
 
 	// return presence of pregenerated garden planet
 	bool get_Garden_Planet_Status();
@@ -41,7 +49,7 @@ public:
 	// *******************
 
 	// populate system stars
-	void gen_Stars();
+	void set_Num_of_Stars();
 
 	// define age of system
 	void define_Age();
