@@ -28,7 +28,6 @@ public:
 	// CONSTRUCTORS *
 	//***************
 
-	// constructor
 	SystemStats();
 	
 	//**********************

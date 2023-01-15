@@ -10,7 +10,7 @@ Star::Star(Star* prim)
 	primary = prim;
 }
 
-double Star::get_Mass()
+float Star::get_Mass()
 {
 	return stellar_mass;
 }
@@ -23,6 +23,16 @@ Star* Star::get_Primary()
 //*************************
 // STELLAR MASS GENERATOR *
 //*************************
+
+void Star::gen_Characteristics()
+{
+	switch (stellar_mass) {
+		case (0.10)		:
+
+			break;
+		case (0.15)	:
+	}
+}
 
 void Star::gen_Mass(bool garden_planet_present)
 {
