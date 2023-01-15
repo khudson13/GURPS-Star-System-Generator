@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="NOTES.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="SystemStats.h" />

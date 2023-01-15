@@ -1,31 +1,32 @@
 #include "Star.h"
 #include "Dice.h"
 
-//#include <string>
-
 //*********************
 // METHOD DEFINITIONS *
 //*********************
 
+// CONSTRUCTOR for companiohn
 Star::Star(Star* prim)
 {
 	primary = prim;
 }
 
-double Star::get_Mass()
-{
-	return stellar_mass;
-}
+// OUTPUT METHODS
+float Star::get_G_Span() { return g_span; }
+bool Star::get_Has_Companion(){ return has_companion; }
+bool Star::get_Is_Companion() { return companion; }
+float Star::get_L_Max() { return l_max; }
+float Star::get_L_Min() { return l_min; }
+double Star::get_Mass(){ return stellar_mass; }
+float Star::get_M_Span() { return m_span; }
+int Star::get_Num_Of_Companions() { return num_of_companions; }
+Star* Star::get_Primary(){ return primary; }
+std::string Star::get_Spectral_Type() { return spectral_type; }
+float Star::get_S_Span() { return s_span; }
+int Star::get_Temp() { return temp; }
 
-Star* Star::get_Primary()
-{
-	return primary;
-}
 
-//*************************
-// STELLAR MASS GENERATOR *
-//*************************
-
+// GENERATORS AND MISC
 void Star::gen_Characteristics()
 {
 	if (stellar_mass == 0.10)
@@ -533,7 +534,7 @@ void Star::gen_Mass(bool garden_planet_present)
 		}
 	}
 
-	else if (get_Primary != nullptr)	// companion mass generator
+	else if (get_Primary != nullptr && !garden_planet_present)	// companion mass generator
 	{
 		int difference_roll{ Dice::roll_D6(1) - 1 }; // value to establish difference between primary and secondary
 		int steps_down{ 0 };	// how many steps down mass chart (pg. 101 GURPS Space) from primary star mass
@@ -565,7 +566,7 @@ void Star::gen_Mass(bool garden_planet_present)
 		}
 	}
 
-	else // special mass generator guarantees favorable environment for garden planet
+	else // GARDEN PLANET NEEDED: special mass generator guarantees favorable environment for garden planet
 	{
 
 	}

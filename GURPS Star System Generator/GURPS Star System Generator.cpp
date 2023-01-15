@@ -22,6 +22,11 @@ a whole.
 
 int main()
 {
-    SystemStats NewSystem;
+    SystemStats NewSystem; // instantiate system
 
+    // GENERATE STAR(S)
+    for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
+    {
+
+    }
 }
