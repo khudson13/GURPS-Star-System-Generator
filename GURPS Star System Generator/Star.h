@@ -8,9 +8,11 @@
 class Star
 {
 private:
+
+	std::vector<Star> companion_vec;	// vector of companion stars
+
 	bool has_companion{ false };		// does this star have a companion
 	int num_of_companions{ 0 };			// number of companions this star has
-	// VECTOR OF COMPANION STARS
 	bool companion{ false };			// does this star orbit a primary?
 	Star* primary{ nullptr };			// pointer to primary, if present
 	double stellar_mass{ 0 };			// expressed in solar masses

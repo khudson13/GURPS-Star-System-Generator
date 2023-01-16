@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Star.h"
+
 #include <vector>
 
 // GENERAL DATA ABOUT SOLAR SYSTEM
@@ -8,19 +10,18 @@
 class SystemStats
 {
 private:
-	int num_of_stars{ 0 };
-	// *** DEFINE VECTOR OF STARS HERE ***
+
+	std::vector<Star> star_vec;		// vector of companion stars
 	// *** DEFINE VECTOR OF PLANETS HERE ***
 	// *** MOON VECTORS ARE STORED WTIH THEIR ASSOCIATED PLANETS ***
+
+	int num_of_stars{ 0 };
 
 	//*****************************************
 	// FOR SYSTEMS WITH A PREGENERATED PLANET *
 	//*****************************************
 	bool pregen_garden_planet{ false };	// is there a pregenerated garden planet?
 	float system_age{ 0 };				// age of system
-	
-	// set number of stars in system
-	void set_Stars(int);
 
 public:
 
@@ -30,6 +31,12 @@ public:
 
 	SystemStats();
 	
+	//*********************
+	// VALUE INPUT FUNCTS *
+	//*********************
+
+	void add_Star(Star);
+
 	//**********************
 	// VALUE OUTPUT FUNCTS *
 	//**********************
@@ -37,17 +44,23 @@ public:
 	// get age
 	float get_Age();
 
+	// return presence of pregenerated garden planet
+	bool get_Garden_Planet_Status();
+
 	// return number of stars in system
 	int get_Num_of_Stars();
 
-	// return presence of pregenerated garden planet
-	bool get_Garden_Planet_Status();
+	// return a star
+	Star get_Star(int index);
+
+	// return mass of a given star
+	float get_Stellar_Mass(int index);
 
 	//********************
 	// SYSTEM GENERATORS *
 	// *******************
 
-	// populate system stars
+	// determine number of stars in system
 	void set_Num_of_Stars();
 
 	// define age of system

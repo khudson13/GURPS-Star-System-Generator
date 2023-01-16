@@ -25,27 +25,25 @@ SystemStats::SystemStats()
 	SystemStats::define_Age();
 }
 
+//****************
+// INPUT METHODS *
+//****************
+
+// add a new star
+void SystemStats::add_Star(Star primary)
+{
+	star_vec.push_back(new Star(primary));
+}
+
 //*****************
 // OUTPUT METHODS *
 //*****************
 
-// get age
-float SystemStats::get_Age()
-{
-	return SystemStats::system_age;
-}
-
-// get whether or not a pregen garden planet exists
-bool SystemStats::get_Garden_Planet_Status()
-{
-	return pregen_garden_planet;
-}
-
-// get number of stars
-int SystemStats::get_Num_of_Stars()
-{
-	return num_of_stars;
-}
+float SystemStats::get_Age(){ return SystemStats::system_age; }
+bool SystemStats::get_Garden_Planet_Status(){ return pregen_garden_planet; }
+int SystemStats::get_Num_of_Stars(){ return num_of_stars; }
+Star SystemStats::get_Star(int index) { return star_vec[index]; }
+float SystemStats::get_Stellar_Mass(int index) { return star_vec[index].get_Mass(); }
 
 //*********************
 // DEFINITION METHODS *
@@ -131,20 +129,14 @@ void SystemStats::set_Num_of_Stars()
 	// interpret roll
 	if (roll_3D6 >= 3 && roll_3D6 <= 10)
 	{
-		set_Stars(1);
+		num_of_stars = 1;
 	}
 	else if (roll_3D6 >= 11 && roll_3D6 <= 15)
 	{
-		set_Stars(2);
+		num_of_stars = 2;
 	}
 	else if (roll_3D6 >= 16)
 	{
-		set_Stars(3);
+		num_of_stars = 3;
 	}
-}
-
-// set number of stars
-void SystemStats::set_Stars(int x)
-{
-	num_of_stars = x;
 }

@@ -27,6 +27,13 @@ int main()
     // GENERATE STAR(S)
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
-
+        if (i == 0)
+        {
+            NewSystem.add_Star(nullptr); // add primary star
+        }
+        else
+        {
+            NewSystem.add_Star(NewSystem.get_Star(0));  // add first or second companion
+        }
     }
 }
