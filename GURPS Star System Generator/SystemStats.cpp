@@ -39,11 +39,11 @@ void SystemStats::add_Star(Star primary)
 // OUTPUT METHODS *
 //*****************
 
-float SystemStats::get_Age(){ return SystemStats::system_age; }
+double SystemStats::get_Age(){ return SystemStats::system_age; }
 bool SystemStats::get_Garden_Planet_Status(){ return pregen_garden_planet; }
 int SystemStats::get_Num_of_Stars(){ return num_of_stars; }
 Star SystemStats::get_Star(int index) { return star_vec[index]; }
-float SystemStats::get_Stellar_Mass(int index) { return star_vec[index].get_Mass(); }
+double SystemStats::get_Stellar_Mass(int index) { return star_vec[index].get_Mass(); }
 
 //*********************
 // DEFINITION METHODS *
@@ -53,9 +53,9 @@ float SystemStats::get_Stellar_Mass(int index) { return star_vec[index].get_Mass
 void SystemStats::define_Age()
 {
 	int roll_result{ 0 };// random number for selecting the following values
-	float base_age{ 0 };// randomly selected value for equation
-	float step_A{ 0 };	// randomly selected value for equation
-	float step_B{ 0 };	// randomly selected value for equation
+	double base_age{ 0 };// randomly selected value for equation
+	double step_A{ 0 };	// randomly selected value for equation
+	double step_B{ 0 };	// randomly selected value for equation
 
 	// age range if garden planet present
 	if (get_Garden_Planet_Status())

@@ -6,7 +6,6 @@
 class Dice
 {
 private:
-	static std::random_device rando;  // obtain random number from hardware for rng seed
 	
 
 public:

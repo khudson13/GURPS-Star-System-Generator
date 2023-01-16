@@ -4,11 +4,14 @@
 /*
 Plan to handle each selestial object as its own class, including a class to handle the general characteristics of the system as
 a whole.
+
+Currently this always creates the same filename. Probably best to let the user enter one to avoid overwrites.
 */
 
 //********************
 // STANDARD INCLUDES *
 //********************
+#include <fstream>
 #include <iostream>
 
 //********************
@@ -23,6 +26,7 @@ a whole.
 int main()
 {
     SystemStats NewSystem; // instantiate system
+    std::ofstream System_Out("C:/Users/Kenda/Desktop/System_Data.txt");
 
     // GENERATE STAR(S)
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
@@ -36,4 +40,6 @@ int main()
             NewSystem.add_Star(NewSystem.get_Star(0));  // add first or second companion
         }
     }
+
+    System_Out.close();
 }
