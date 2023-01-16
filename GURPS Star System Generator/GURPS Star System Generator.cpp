@@ -41,5 +41,7 @@ int main()
         }
     }
 
+    System_Out << "This is a test" << std::endl;
+
     System_Out.close();
 }
