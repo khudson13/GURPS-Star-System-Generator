@@ -5,7 +5,7 @@
 // METHOD DEFINITIONS *
 //*********************
 
-// CONSTRUCTOR for companiohn
+// CONSTRUCTOR for companion
 Star::Star(Star* prim)
 {
 	primary = prim;
@@ -564,10 +564,11 @@ void Star::gen_Mass(bool garden_planet_present)
 
 			stellar_mass = companion_mass;
 		}
+
 	}
 
 	else // GARDEN PLANET NEEDED: special mass generator guarantees favorable environment for garden planet
 	{
-
+		stellar_mass = -1; // error
 	}
 }

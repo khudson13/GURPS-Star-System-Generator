@@ -7,6 +7,8 @@
 // GENERAL DATA ABOUT SOLAR SYSTEM
 // VECTORS LISTING STARS, PLANETS, ETC
 
+// contstructor generates number of stars and system age
+
 class SystemStats
 {
 private:

@@ -54,5 +54,5 @@ public:
 	//*************
 
 	void gen_Characteristics();	// generate a range of characteristics based on mass
-	void gen_Mass(bool);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
+	void gen_Mass(bool garden_planet_present);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
 };
