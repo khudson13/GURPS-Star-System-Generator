@@ -13,7 +13,7 @@ class SystemStats
 {
 private:
 
-	std::vector<Star> star_vec;		// vector of companion stars
+	std::vector<Star*> star_vec;		// vector of companion stars
 	// *** DEFINE VECTOR OF PLANETS HERE ***
 	// *** MOON VECTORS ARE STORED WTIH THEIR ASSOCIATED PLANETS ***
 
@@ -37,7 +37,7 @@ public:
 	// VALUE INPUT FUNCTS *
 	//*********************
 
-	void add_Star(Star);
+	void add_Star(Star*);
 
 	//**********************
 	// VALUE OUTPUT FUNCTS *
@@ -53,7 +53,7 @@ public:
 	int get_Num_of_Stars();
 
 	// return a star
-	Star get_Star(int index);
+	Star* get_Star(int index);
 
 	// return mass of a given star
 	double get_Stellar_Mass(int index);

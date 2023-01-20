@@ -30,7 +30,7 @@ SystemStats::SystemStats()
 //****************
 
 // add a new star
-void SystemStats::add_Star(Star primary)
+void SystemStats::add_Star(Star* primary)
 {
 	star_vec.push_back(new Star(primary));
 }
@@ -42,8 +42,8 @@ void SystemStats::add_Star(Star primary)
 double SystemStats::get_Age(){ return SystemStats::system_age; }
 bool SystemStats::get_Garden_Planet_Status(){ return pregen_garden_planet; }
 int SystemStats::get_Num_of_Stars(){ return num_of_stars; }
-Star SystemStats::get_Star(int index) { return star_vec[index]; }
-double SystemStats::get_Stellar_Mass(int index) { return star_vec[index].get_Mass(); }
+Star* SystemStats::get_Star(int index) { return star_vec[index]; }
+double SystemStats::get_Stellar_Mass(int index) { return star_vec[index]->get_Mass(); }
 
 //*********************
 // DEFINITION METHODS *
