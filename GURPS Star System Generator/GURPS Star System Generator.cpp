@@ -47,11 +47,11 @@ int main()
 
     // OUTPUT RESULTS
     System_Out << "Num of Stars: " << NewSystem.get_Num_of_Stars() << std::endl;
-    System_Out << "System Age: " << NewSystem.get_Age() << std::endl;
+    System_Out << "System Age: " << NewSystem.get_Age() << std::endl << std::endl;
 
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
-        System_Out << "Star #: " << i << std::endl;
+        System_Out << "Star #: " << i + 1 << std::endl;
         System_Out << "Mass: " << NewSystem.get_Star(i)->get_Mass() << std::endl;
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
