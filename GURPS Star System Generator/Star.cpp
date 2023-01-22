@@ -561,6 +561,10 @@ void Star::gen_Mass(bool garden_planet_present)
 					companion_mass -= 0.05;
 				}
 			}
+			if (companion_mass < 0.1)
+			{
+				companion_mass = 0.1;
+			}
 
 			stellar_mass = companion_mass;
 		}
