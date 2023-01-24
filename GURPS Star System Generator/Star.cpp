@@ -576,7 +576,6 @@ void Star::gen_Mass(bool garden_planet_present)
 				stellar_mass = 0.1;
 		}
 
-		stellar_mass = 1.7;
 	}
 
 	else if (get_Primary() != nullptr && !garden_planet_present)	// companion mass generator
