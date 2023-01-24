@@ -21,6 +21,7 @@ private:
 	double luminosity{ 0 };				// brightness of star
 	Star* primary{ nullptr };			// pointer to primary, if present
 	double stellar_mass{ 0 };			// expressed in solar masses
+	double stellar_radius{ 0 };			// radius of star
 	std::string spectral_type{ "" };	// spectral type of star in main sequence e.g. G2
 	int temp{ 0 };						// surface temperature in kelvins
 	double l_max{ 0 };					// maximum luminosity in main sequence ** -1 if not applicable **
@@ -52,6 +53,7 @@ public:
 	double get_G_Span();
 	double get_Mass();				// output value of stellar_mass
 	Star* get_Primary();			// output pointer to primary star or nullptr
+	double get_Radius();			// output radius
 	std::string get_Spectral_Type();// output spectral type
 	int get_Temp();					// output temp in kelvins
 

@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Star.h"
 #include "SystemStats.h"
 #include "Dice.h"
@@ -25,6 +27,7 @@ double Star::get_Mass(){ return stellar_mass; }
 double Star::get_M_Span() { return m_span; }
 int Star::get_Num_Of_Companions() { return num_of_companions; }
 Star* Star::get_Primary(){ return primary; }
+double Star::get_Radius() { return stellar_radius; }
 std::string Star::get_Spectral_Type() { return spectral_type; }
 double Star::get_S_Span() { return s_span; }
 int Star::get_Temp() { return temp; }
@@ -44,14 +47,21 @@ void Star::define_Life_Phase()
 	else if ((get_M_Span() + get_S_Span()) >= star_system_pointer->get_Age())
 	{
 		life_stage = "Sub Giant";
+		temp -= ((star_system_pointer->get_Age() - m_span) * (temp - 4800)); // set subgiant temperature
 	}
 	else if ((get_M_Span() + get_S_Span() + get_G_Span()) >= star_system_pointer->get_Age())
 	{
 		life_stage = "Giant";
+		temp = ((Dice::roll_D6(2) - 2) * 200) + 3000; // set giant temp
+		luminosity *= 25;	// set giant luminosity
 	}
 	else
 	{
 		life_stage = "Remnant";
+		stellar_mass = (Dice::roll_D6(2) * 0.05) + 0.9; // set remnant mass
+		luminosity = 0.001;
+		temp = 0;
+		stellar_radius = 0;
 	}
 }
 
@@ -416,6 +426,9 @@ void Star::gen_Characteristics()
 	{
 		luminosity = l_min;
 	}
+
+	// define radius
+	stellar_radius = (155000 * sqrt(luminosity)) * pow(temp, 2);
 }
 
 void Star::gen_Mass(bool garden_planet_present)
