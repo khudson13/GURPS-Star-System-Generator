@@ -56,9 +56,12 @@ int main()
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
 <<<<<<< HEAD
+<<<<<<< HEAD
         System_Out << "Life Cycle: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
         
 =======
+=======
+>>>>>>> parent of 44c6db2 (fix for mass and lifecycle bugs)
 
         if (NewSystem.get_Star(i)->get_M_Span() <= NewSystem.get_Age())
         {
