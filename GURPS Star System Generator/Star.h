@@ -5,7 +5,7 @@
 
 #include "SystemStats.h"
 
-// DESCRIBES A SINGLE STAR // somthing not working
+// DESCRIBES A SINGLE STAR
 
 class Star
 {
