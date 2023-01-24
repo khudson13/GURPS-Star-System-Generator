@@ -3,7 +3,9 @@
 #include <string>
 #include <vector>
 
-#include "SystemStats.h"
+//#include "SystemStats.h"
+
+class StarSystemStats;
 
 // DESCRIBES A SINGLE STAR
 

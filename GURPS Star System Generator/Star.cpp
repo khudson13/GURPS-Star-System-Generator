@@ -1,4 +1,5 @@
 #include "Star.h"
+#include "SystemStats.h"
 #include "Dice.h"
 
 //*********************

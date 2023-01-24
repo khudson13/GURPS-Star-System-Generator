@@ -36,12 +36,14 @@ int main()
             NewSystem.add_Star(nullptr); // add primary star
             NewSystem.get_Star(i)->gen_Mass(NewSystem.get_Garden_Planet_Status());
             NewSystem.get_Star(i)->gen_Characteristics();
+            NewSystem.get_Star(i)->define_Life_Phase();
         }
         else
         {
             NewSystem.add_Star(NewSystem.get_Star(0));  // add first or second companion
             NewSystem.get_Star(i)->gen_Mass(NewSystem.get_Garden_Planet_Status());
             NewSystem.get_Star(i)->gen_Characteristics();
+            NewSystem.get_Star(i)->define_Life_Phase();
         }
     }
 
@@ -55,7 +57,7 @@ int main()
         System_Out << "Mass: " << NewSystem.get_Star(i)->get_Mass() << std::endl;
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
-
+        System_Out << "Life Phase: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
 
         System_Out << std::endl;
     }
