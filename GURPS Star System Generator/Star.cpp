@@ -18,6 +18,7 @@ double Star::get_G_Span() { return g_span; }
 bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
 std::string Star::get_Life_Stage() { return life_stage; }
+double Star::get_Luminosity() { return luminosity; };
 double Star::get_L_Max() { return l_max; }
 double Star::get_L_Min() { return l_min; }
 double Star::get_Mass(){ return stellar_mass; }
@@ -403,7 +404,17 @@ void Star::gen_Characteristics()
 	}
 	else
 	{
-		// SOMETHING WENT WRONG
+		spectral_type = "ERROR";
+	}
+
+	// define luminosity
+	if (l_max != -1)
+	{
+		luminosity = l_min + ((star_system_pointer->get_Age() / m_span) * (l_max - l_min));
+	}
+	else
+	{
+		luminosity = l_min;
 	}
 }
 
@@ -564,6 +575,8 @@ void Star::gen_Mass(bool garden_planet_present)
 			default		:
 				stellar_mass = 0.1;
 		}
+
+		stellar_mass = 1.7;
 	}
 
 	else if (get_Primary() != nullptr && !garden_planet_present)	// companion mass generator
@@ -598,6 +611,11 @@ void Star::gen_Mass(bool garden_planet_present)
 				companion_mass = 0.1;
 			}
 
+			// fix rounding errors
+			companion_mass *= 10;
+			companion_mass = static_cast<int>(companion_mass);
+			companion_mass /= 10;
+
 			stellar_mass = companion_mass;
 		}
 
@@ -607,4 +625,7 @@ void Star::gen_Mass(bool garden_planet_present)
 	{
 		stellar_mass = -1; // error
 	}
+
+	
+
 }

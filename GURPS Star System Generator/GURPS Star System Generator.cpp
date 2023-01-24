@@ -58,6 +58,7 @@ int main()
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
         System_Out << "Life Phase: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
+        System_Out << "Luminosity: " << NewSystem.get_Star(i)->get_Luminosity() << std::endl;
 
         System_Out << std::endl;
     }

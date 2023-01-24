@@ -3,9 +3,7 @@
 #include <string>
 #include <vector>
 
-//#include "SystemStats.h"
-
-class StarSystemStats;
+class StarSystemStats;	// including "SystemStats.h" creates a weird circular dependence, this seems to be better
 
 // DESCRIBES A SINGLE STAR
 
@@ -20,6 +18,7 @@ private:
 	int num_of_companions{ 0 };			// number of companions this star has
 	bool companion{ false };			// does this star orbit a primary?
 	std::string life_stage{ "" };		// life phase, main sequence, etc
+	double luminosity{ 0 };				// brightness of star
 	Star* primary{ nullptr };			// pointer to primary, if present
 	double stellar_mass{ 0 };			// expressed in solar masses
 	std::string spectral_type{ "" };	// spectral type of star in main sequence e.g. G2
@@ -45,6 +44,7 @@ public:
 	int get_Num_Of_Companions();	// output number of companions
 	bool get_Is_Companion();		// is this star a companion?
 	std::string get_Life_Stage();	// output life phase
+	double get_Luminosity();		// output luminosity
 	double get_L_Max();				// output l_max
 	double get_L_Min();				// output l-min
 	double get_M_Span();			// output phase lifespans
