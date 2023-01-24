@@ -47,7 +47,7 @@ int main()
 
     // OUTPUT RESULTS
     System_Out << "Num of Stars: " << NewSystem.get_Num_of_Stars() << std::endl;
-    System_Out << "System Age: " << NewSystem.get_Age() << " billion years" << std::endl << std::endl;
+    System_Out << "System Age: " << NewSystem.get_Age() << std::endl << std::endl;
 
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
@@ -55,8 +55,28 @@ int main()
         System_Out << "Mass: " << NewSystem.get_Star(i)->get_Mass() << std::endl;
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
+<<<<<<< HEAD
         System_Out << "Life Cycle: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
         
+=======
+
+        if (NewSystem.get_Star(i)->get_M_Span() <= NewSystem.get_Age())
+        {
+            System_Out << "Life Cycle: Main Sequence" << std::endl;
+        }
+        else if ((NewSystem.get_Star(i)->get_M_Span() + NewSystem.get_Star(i)->get_S_Span()) <= NewSystem.get_Age())
+        {
+            System_Out << "Life Cycle: Sub-Giant" << std::endl;
+        }
+        else if ((NewSystem.get_Star(i)->get_M_Span() + NewSystem.get_Star(i)->get_S_Span() + NewSystem.get_Star(i)->get_G_Span()) <= NewSystem.get_Age())
+        {
+            System_Out << "Life Cycle: Giant" << std::endl;
+        }
+        else
+        {
+            System_Out << "Life Cycle: Remnant" << std::endl;
+        }
+>>>>>>> parent of 44c6db2 (fix for mass and lifecycle bugs)
 
         System_Out << std::endl;
     }
