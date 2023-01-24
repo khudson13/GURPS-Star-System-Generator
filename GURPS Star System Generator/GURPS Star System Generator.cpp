@@ -25,7 +25,7 @@ Currently this always creates the same filename. Probably best to let the user e
 
 int main()
 {
-    SystemStats NewSystem; // instantiate system
+    StarSystemStats NewSystem; // instantiate system
     std::ofstream System_Out("C:/Users/Kenda/Desktop/System_Data.txt");
 
     // GENERATE STAR(S)
@@ -55,27 +55,8 @@ int main()
         System_Out << "Mass: " << NewSystem.get_Star(i)->get_Mass() << std::endl;
         System_Out << "Spectral Type: " << NewSystem.get_Star(i)->get_Spectral_Type() << std::endl;
         System_Out << "Temperature: " << NewSystem.get_Star(i)->get_Temp() << std::endl;
-           
-        if (NewSystem.get_Star(i)->get_G_Span() == -1)
-        {
-            System_Out << "Life Cycle: Main Sequence" << std::endl;
-        }
-        else if (NewSystem.get_Star(i)->get_M_Span() >= NewSystem.get_Age())
-        {
-            System_Out << "Life Cycle: Main Sequence" << std::endl;
-        }
-        else if ((NewSystem.get_Star(i)->get_M_Span() + NewSystem.get_Star(i)->get_S_Span()) >= NewSystem.get_Age())
-        {
-            System_Out << "Life Cycle: Sub-Giant" << std::endl;
-        }
-        else if ((NewSystem.get_Star(i)->get_M_Span() + NewSystem.get_Star(i)->get_S_Span() + NewSystem.get_Star(i)->get_G_Span()) >= NewSystem.get_Age())
-        {
-            System_Out << "Life Cycle: Giant" << std::endl;
-        }
-        else
-        {
-            System_Out << "Life Cycle: Remnant" << std::endl;
-        }
+        System_Out << "Life Cycle: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
+        
 
         System_Out << std::endl;
     }

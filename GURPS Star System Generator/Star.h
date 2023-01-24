@@ -3,17 +3,21 @@
 #include <string>
 #include <vector>
 
+#include "SystemStats.h"
+
 // DESCRIBES A SINGLE STAR
 
 class Star
 {
 private:
 
-	std::vector<Star*> companion_vec;	// vector of companion stars
+	StarSystemStats* star_system_pointer{ nullptr };	// pointer to star system object
+	std::vector<Star*> companion_vec;					// vector of companion stars
 
 	bool has_companion{ false };		// does this star have a companion
 	int num_of_companions{ 0 };			// number of companions this star has
 	bool companion{ false };			// does this star orbit a primary?
+	std::string life_stage{ "" };		// life phase, main sequence, etc
 	Star* primary{ nullptr };			// pointer to primary, if present
 	double stellar_mass{ 0 };			// expressed in solar masses
 	std::string spectral_type{ "" };	// spectral type of star in main sequence e.g. G2
@@ -29,7 +33,7 @@ public:
 	// CONSTRUCTOR *
 	//**************
 
-	Star(Star*);	// nullptr for primary stars, pointer to primary for companions
+	Star(Star*, StarSystemStats*);	// nullptr for primary stars, pointer to primary for companions
 	
 	//*******************
 	// OUTPUT FUNCTIONS *
@@ -38,21 +42,24 @@ public:
 	bool get_Has_Companion();		// does this star have a companion?
 	int get_Num_Of_Companions();	// output number of companions
 	bool get_Is_Companion();		// is this star a companion?
+	std::string get_Life_Stage();	// output life phase
 	double get_L_Max();				// output l_max
 	double get_L_Min();				// output l-min
-	double get_M_Span();				// output phase lifespans
+	double get_M_Span();			// output phase lifespans
 	double get_S_Span();				
 	double get_G_Span();
 	double get_Mass();				// output value of stellar_mass
 	Star* get_Primary();			// output pointer to primary star or nullptr
 	std::string get_Spectral_Type();// output spectral type
 	int get_Temp();					// output temp in kelvins
-	
+
 
 	//*************
 	// GENERATORS *
 	//*************
 
 	void gen_Characteristics();	// generate a range of characteristics based on mass
+	void define_Life_Phase();
+	void define_System_Pointer(StarSystemStats*);
 	void gen_Mass(bool garden_planet_present);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
 };

@@ -9,7 +9,7 @@
 
 // contstructor generates number of stars and system age
 
-class SystemStats
+class StarSystemStats
 {
 private:
 
@@ -31,7 +31,7 @@ public:
 	// CONSTRUCTORS *
 	//***************
 
-	SystemStats();
+	StarSystemStats();
 	
 	//*********************
 	// VALUE INPUT FUNCTS *

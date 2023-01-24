@@ -9,7 +9,7 @@
 //***************
 // CONSTRUCTORS *
 //***************
-SystemStats::SystemStats()
+StarSystemStats::StarSystemStats()
 {
 	char response{ ' ' }; // store user's yes/no
 	std::cout << "Does this system include a pregenerated garden world? (y/n): ";
@@ -21,8 +21,8 @@ SystemStats::SystemStats()
 	}
 	
 	// run generator functs
-	SystemStats::set_Num_of_Stars();
-	SystemStats::define_Age();
+	StarSystemStats::set_Num_of_Stars();
+	StarSystemStats::define_Age();
 }
 
 //****************
@@ -30,27 +30,29 @@ SystemStats::SystemStats()
 //****************
 
 // add a new star
-void SystemStats::add_Star(Star* primary)
+void StarSystemStats::add_Star(Star* primary)
 {
-	star_vec.push_back(new Star(primary));
+	Star* starptr1{ new Star(primary, this) };	// instantiate new star
+	starptr1->define_System_Pointer(this);	// tell star who it belongs to
+	star_vec.push_back(starptr1);			// add star to owner system star vector
 }
 
 //*****************
 // OUTPUT METHODS *
 //*****************
 
-double SystemStats::get_Age(){ return SystemStats::system_age; }
-bool SystemStats::get_Garden_Planet_Status(){ return pregen_garden_planet; }
-int SystemStats::get_Num_of_Stars(){ return num_of_stars; }
-Star* SystemStats::get_Star(int index) { return star_vec[index]; }
-double SystemStats::get_Stellar_Mass(int index) { return star_vec[index]->get_Mass(); }
+double StarSystemStats::get_Age(){ return StarSystemStats::system_age; }
+bool StarSystemStats::get_Garden_Planet_Status(){ return pregen_garden_planet; }
+int StarSystemStats::get_Num_of_Stars(){ return num_of_stars; }
+Star* StarSystemStats::get_Star(int index) { return star_vec[index]; }
+double StarSystemStats::get_Stellar_Mass(int index) { return star_vec[index]->get_Mass(); }
 
 //*********************
 // DEFINITION METHODS *
 //*********************
 
 // define system age
-void SystemStats::define_Age()
+void StarSystemStats::define_Age()
 {
 	int roll_result{ 0 };// random number for selecting the following values
 	double base_age{ 0 };// randomly selected value for equation
@@ -122,7 +124,7 @@ void SystemStats::define_Age()
 }
 
 // generate number of stars
-void SystemStats::set_Num_of_Stars()
+void StarSystemStats::set_Num_of_Stars()
 {
 	int roll_3D6{ Dice::roll_D6(3) }; // result of roll
 

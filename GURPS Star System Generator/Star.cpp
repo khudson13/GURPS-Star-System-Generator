@@ -6,15 +6,17 @@
 //*********************
 
 // CONSTRUCTOR for companion
-Star::Star(Star* prim)
+Star::Star(Star* prim, StarSystemStats* stats)
 {
 	primary = prim;
+	star_system_pointer = stats;
 }
 
 // OUTPUT METHODS
 double Star::get_G_Span() { return g_span; }
 bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
+std::string Star::get_Life_Stage() { return life_stage; }
 double Star::get_L_Max() { return l_max; }
 double Star::get_L_Min() { return l_min; }
 double Star::get_Mass(){ return stellar_mass; }
@@ -27,6 +29,35 @@ int Star::get_Temp() { return temp; }
 
 
 // GENERATORS AND MISC
+void Star::define_Life_Phase()
+{
+	if (get_G_Span() == -1)
+	{
+		life_stage = "Main Sequence";
+	}
+	else if (get_M_Span() >= star_system_pointer->get_Age())
+	{
+		life_stage = "Main Sequence";
+	}
+	else if ((get_M_Span() + get_S_Span()) >= star_system_pointer->get_Age())
+	{
+		life_stage = "Sub Giant";
+	}
+	else if ((get_M_Span() + get_S_Span() + get_G_Span()) >= star_system_pointer->get_Age())
+	{
+		life_stage = "Giant";
+	}
+	else
+	{
+		life_stage = "Remnant";
+	}
+}
+
+void Star::define_System_Pointer(StarSystemStats* parent)
+{
+	star_system_pointer = parent;
+}
+
 void Star::gen_Characteristics()
 {
 	if (stellar_mass == 0.10)
