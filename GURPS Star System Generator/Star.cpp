@@ -9,9 +9,14 @@
 //*********************
 
 // CONSTRUCTOR for companion
-Star::Star(Star* prim, StarSystemStats* stats)
+Star::Star(Star* prim, StarSystemStats* stats, int named)
 {
+	name = named;
 	primary = prim;
+	if (primary != nullptr)
+	{
+		companion = true;
+	}
 	star_system_pointer = stats;
 }
 
@@ -19,6 +24,9 @@ Star::Star(Star* prim, StarSystemStats* stats)
 double Star::get_G_Span() { return g_span; }
 bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
+double Star::get_Orbital_Radius() { return orbital_radius; }
+std::string Star::get_Separation() { return separation; }
+double Star::get_Eccentricity() { return eccentricity; }
 std::string Star::get_Life_Stage() { return life_stage; }
 double Star::get_Luminosity() { return luminosity; };
 double Star::get_L_Max() { return l_max; }
@@ -63,6 +71,51 @@ void Star::define_Life_Phase()
 		temp = 0;
 		stellar_radius = 0;
 	}
+}
+
+void Star::define_Orbital_Radius()
+{
+	int roll{ Dice::roll_D6(3) };	// dice roll for seperation chart GURPS Space P.105
+	double radius_mult{ 0 };		// multiplier for radius equation (in AU)
+
+	// modify dice roll
+	if (star_system_pointer->get_Garden_Planet_Status())
+	{
+		roll += 4;
+	}
+	if (name == 2) // if this is the second companion
+	{
+		roll += 6;
+	}
+
+	// find radius multiplier and separation descriptor
+	if (roll <= 6)
+	{
+		separation = "Very Close";
+		radius_mult = 0.05;
+	}
+	else if (roll >= 7 && roll <= 9)
+	{
+		separation = "Close";
+		radius_mult = 0.5;
+	}
+	else if (roll == 10 || roll == 11)
+	{
+		separation = "Moderate";
+		radius_mult = 2;
+	}
+	else if (roll >= 12 && roll <= 14)
+	{
+		separation = "Wide";
+		radius_mult = 10;
+	}
+	else
+	{
+		separation = "Distant";
+		radius_mult = 50;
+	}
+
+	orbital_radius = Dice::roll_D6(2) * radius_mult;	// find orbital radius
 }
 
 void Star::define_System_Pointer(StarSystemStats* parent)

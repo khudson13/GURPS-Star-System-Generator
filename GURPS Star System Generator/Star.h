@@ -11,12 +11,16 @@ class Star
 {
 private:
 
+	int name{ 0 };										// numbered, to remember which companion it is (0 == primary)
 	StarSystemStats* star_system_pointer{ nullptr };	// pointer to star system object
 	std::vector<Star*> companion_vec;					// vector of companion stars
 
 	bool has_companion{ false };		// does this star have a companion
 	int num_of_companions{ 0 };			// number of companions this star has
 	bool companion{ false };			// does this star orbit a primary?
+	double orbital_radius{ 0 };			// orbital radius if companion
+	std::string separation{ 0 };
+	double eccentricity{ 0 };			// orbital eccentricity if companion
 	std::string life_stage{ "" };		// life phase, main sequence, etc
 	double luminosity{ 0 };				// brightness of star
 	Star* primary{ nullptr };			// pointer to primary, if present
@@ -35,7 +39,7 @@ public:
 	// CONSTRUCTOR *
 	//**************
 
-	Star(Star*, StarSystemStats*);	// nullptr for primary stars, pointer to primary for companions
+	Star(Star*, StarSystemStats*, int);	// nullptr for primary stars, pointer to primary for companions
 	
 	//*******************
 	// OUTPUT FUNCTIONS *
@@ -44,6 +48,9 @@ public:
 	bool get_Has_Companion();		// does this star have a companion?
 	int get_Num_Of_Companions();	// output number of companions
 	bool get_Is_Companion();		// is this star a companion?
+	double get_Orbital_Radius();	// return orbital radius
+	std::string get_Separation();	// degree of separation from primary if companion
+	double get_Eccentricity();		// output eccentricity
 	std::string get_Life_Stage();	// output life phase
 	double get_Luminosity();		// output luminosity
 	double get_L_Max();				// output l_max
@@ -62,8 +69,9 @@ public:
 	// GENERATORS *
 	//*************
 
-	void gen_Characteristics();	// generate a range of characteristics based on mass
-	void define_Life_Phase();
-	void define_System_Pointer(StarSystemStats*);
+	void gen_Characteristics();						// generate a range of characteristics based on mass
+	void define_Life_Phase();						// define life phase based on age and mass
+	void define_Orbital_Radius();					// find radius of companion orbit around primary
+	void define_System_Pointer(StarSystemStats*);	// set pointer to home system
 	void gen_Mass(bool garden_planet_present);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
 };

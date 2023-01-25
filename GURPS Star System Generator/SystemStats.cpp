@@ -30,11 +30,11 @@ StarSystemStats::StarSystemStats()
 //****************
 
 // add a new star
-void StarSystemStats::add_Star(Star* primary)
+void StarSystemStats::add_Star(Star* primary, int i)
 {
-	Star* starptr1{ new Star(primary, this) };	// instantiate new star
-	starptr1->define_System_Pointer(this);	// tell star who it belongs to
-	star_vec.push_back(starptr1);			// add star to owner system star vector
+	Star* starptr1{ new Star(primary, this, i) };	// instantiate new star
+	starptr1->define_System_Pointer(this);			// tell star who it belongs to
+	star_vec.push_back(starptr1);					// add star to owner system star vector
 }
 
 //*****************

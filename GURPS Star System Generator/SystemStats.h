@@ -37,7 +37,7 @@ public:
 	// VALUE INPUT FUNCTS *
 	//*********************
 
-	void add_Star(Star*);
+	void add_Star(Star*, int named);
 
 	//**********************
 	// VALUE OUTPUT FUNCTS *

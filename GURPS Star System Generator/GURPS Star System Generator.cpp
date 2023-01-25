@@ -33,17 +33,19 @@ int main()
     {
         if (i == 0)
         {
-            NewSystem.add_Star(nullptr); // add primary star
+            NewSystem.add_Star(nullptr, i); // add primary star
             NewSystem.get_Star(i)->gen_Mass(NewSystem.get_Garden_Planet_Status());
             NewSystem.get_Star(i)->gen_Characteristics();
             NewSystem.get_Star(i)->define_Life_Phase();
+            NewSystem.get_Star(i)->define_Orbital_Radius();
         }
         else
         {
-            NewSystem.add_Star(NewSystem.get_Star(0));  // add first or second companion
+            NewSystem.add_Star(NewSystem.get_Star(0), i);  // add first or second companion
             NewSystem.get_Star(i)->gen_Mass(NewSystem.get_Garden_Planet_Status());
             NewSystem.get_Star(i)->gen_Characteristics();
             NewSystem.get_Star(i)->define_Life_Phase();
+            NewSystem.get_Star(i)->define_Orbital_Radius();
         }
     }
 
@@ -60,6 +62,11 @@ int main()
         System_Out << "Life Phase: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
         System_Out << "Luminosity: " << NewSystem.get_Star(i)->get_Luminosity() << std::endl;
         System_Out << "Radius: " << NewSystem.get_Star(i)->get_Radius() << " AU" << std::endl;
+        if (NewSystem.get_Star(i)->get_Is_Companion())
+        {
+            System_Out << "Separation from primary: " << NewSystem.get_Star(i)->get_Separation() << std::endl;
+            System_Out << "Average Orbital Radius: " << NewSystem.get_Star(i)->get_Orbital_Radius() << std::endl;
+        }
 
         System_Out << std::endl;
     }
