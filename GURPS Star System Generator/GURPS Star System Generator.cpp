@@ -66,6 +66,8 @@ int main()
         {
             System_Out << "Separation from primary: " << NewSystem.get_Star(i)->get_Separation() << std::endl;
             System_Out << "Average Orbital Radius: " << NewSystem.get_Star(i)->get_Orbital_Radius() << std::endl;
+            System_Out << "Max Orbital Eccentricity: " << NewSystem.get_Star(i)->get_Eccentricity_Max() << std::endl;
+            System_Out << "Min Orbital Eccentricity: " << NewSystem.get_Star(i)->get_Eccentricity_Min() << std::endl;
         }
 
         System_Out << std::endl;

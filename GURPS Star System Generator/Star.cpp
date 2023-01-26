@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include "Star.h"
 #include "SystemStats.h"
@@ -26,7 +27,8 @@ bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
 double Star::get_Orbital_Radius() { return orbital_radius; }
 std::string Star::get_Separation() { return separation; }
-double Star::get_Eccentricity() { return eccentricity; }
+double Star::get_Eccentricity_Max() { return eccentricity_max; }
+double Star::get_Eccentricity_Min() { return eccentricity_min; }
 std::string Star::get_Life_Stage() { return life_stage; }
 double Star::get_Luminosity() { return luminosity; };
 double Star::get_L_Max() { return l_max; }
@@ -38,7 +40,7 @@ Star* Star::get_Primary(){ return primary; }
 double Star::get_Radius() { return stellar_radius; }
 std::string Star::get_Spectral_Type() { return spectral_type; }
 double Star::get_S_Span() { return s_span; }
-int Star::get_Temp() { return temp; }
+double Star::get_Temp() { return temp; }
 
 
 // GENERATORS AND MISC
@@ -116,6 +118,85 @@ void Star::define_Orbital_Radius()
 	}
 
 	orbital_radius = Dice::roll_D6(2) * radius_mult;	// find orbital radius
+	
+	// ensure orbital radius of second companion is larger orbital than radius of first companion
+	if (name == 2)
+	{
+		while (orbital_radius <= star_system_pointer->get_Star(1)->get_Orbital_Radius())
+		{
+			orbital_radius *= 2;
+		}
+	}
+
+	if (separation == "Distant")
+	{
+		if (Dice::roll_D6(3) >= 11)
+		{
+			std::cout << std::endl << std::endl << "COMPANION HAS A COMPANION" << std::endl << std::endl;
+		}
+	}
+
+	// find eccentricity
+	roll = Dice::roll_D6(3);
+	double eccentricity{ 0 };
+
+	// modify roll
+	if (separation == "Very Close")
+	{
+		roll -= 6;
+	}
+	else if (separation == "Close")
+	{
+		roll -= 4;
+	}
+	else if (separation == "Moderate")
+	{
+		roll -= 2;
+	}
+
+	switch (roll) {
+		case (3):
+			eccentricity = 0;
+			break;
+		case (4):
+			eccentricity = 0.1;
+			break;
+		case (5):
+			eccentricity = 0.2;
+			break;
+		case (6):
+			eccentricity = 0.3;
+			break;
+		case (7):
+		case (8):
+			eccentricity = 0.4;
+			break;
+		case (9):
+		case (10):
+		case (11):
+			eccentricity = 0.5;
+			break;
+		case (12):
+		case (13):
+			eccentricity = 0.6;
+			break;
+		case (14):
+		case (15):
+			eccentricity = 0.7;
+			break;
+		case (16):
+			eccentricity = 0.8;
+			break;
+		case (17):
+			eccentricity = 0.9;
+			break;
+		default: // anything 18 and up
+			eccentricity = 0.95;
+	}
+
+	// define eccentricity
+	eccentricity_max = (1 + eccentricity) * orbital_radius;
+	eccentricity_min = (1 - eccentricity) * orbital_radius;
 }
 
 void Star::define_System_Pointer(StarSystemStats* parent)
