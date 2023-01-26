@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "Planet.h"
+
 class StarSystemStats;	// including "SystemStats.h" creates a weird circular dependence, this seems to be better
 
 // DESCRIBES A SINGLE STAR
@@ -13,13 +15,16 @@ private:
 
 	int name{ 0 };										// numbered, to remember which companion it is (0 == primary)
 	StarSystemStats* star_system_pointer{ nullptr };	// pointer to star system object
-	std::vector<Star*> companion_vec;					// vector of companion stars
+	std::vector<Star*> companion_vec;					// vector of companion stars *I don't think I ever used this, just reference the star_vec in SystemStats
+	std::vector<Planet*> orbits_vec;					// list of planets, asteroid belts, etc
 
 	bool has_companion{ false };		// does this star have a companion
 	int num_of_companions{ 0 };			// number of companions this star has
 	bool companion{ false };			// does this star orbit a primary?
 	double orbital_radius{ 0 };			// orbital radius if companion
 	std::string separation{ 0 };
+	double forbidden_zone_inner{ 0 };	// bounds of orbits forbidden to both companion and primary
+	double forbidden_zone_outer{ 0 };
 	double eccentricity_max{ 0 };		// maximum orbital eccentricity of companion
 	double eccentricity_min{ 0 };		// minimum orbital eccentricity of companion
 	std::string life_stage{ "" };		// life phase, main sequence, etc
@@ -28,7 +33,7 @@ private:
 	double stellar_mass{ 0 };			// expressed in solar masses
 	double stellar_radius{ 0 };			// radius of star
 	std::string spectral_type{ "" };	// spectral type of star in main sequence e.g. G2
-	double temp{ 0 };						// surface temperature in kelvins
+	double temp{ 0 };					// surface temperature in kelvins
 	double l_max{ 0 };					// maximum luminosity in main sequence ** -1 if not applicable **
 	double l_min{ 0 };					// minimum luminosity in main sequence
 	double m_span{ 0 };					// duration of main sequence in billions of years ** -1 if not applicable **
@@ -76,4 +81,5 @@ public:
 	void define_Orbital_Radius();					// find radius and eccentricity of companion orbit around primary
 	void define_System_Pointer(StarSystemStats*);	// set pointer to home system
 	void gen_Mass(bool garden_planet_present);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
+	void populate_Orbits(Star*);					// fill orbits with planets, pointer to parent star
 };

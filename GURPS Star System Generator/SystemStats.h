@@ -14,16 +14,14 @@ class StarSystemStats
 private:
 
 	std::vector<Star*> star_vec;		// vector of companion stars
-	// *** DEFINE VECTOR OF PLANETS HERE ***
-	// *** MOON VECTORS ARE STORED WTIH THEIR ASSOCIATED PLANETS ***
 
-	int num_of_stars{ 0 };
+	int num_of_stars{ 0 };				// how many stars in system
+	double system_age{ 0 };				// age of system
 
 	//*****************************************
 	// FOR SYSTEMS WITH A PREGENERATED PLANET *
 	//*****************************************
 	bool pregen_garden_planet{ false };	// is there a pregenerated garden planet?
-	double system_age{ 0 };				// age of system
 
 public:
 

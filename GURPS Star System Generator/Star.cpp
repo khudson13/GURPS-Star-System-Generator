@@ -197,6 +197,10 @@ void Star::define_Orbital_Radius()
 	// define eccentricity
 	eccentricity_max = (1 + eccentricity) * orbital_radius;
 	eccentricity_min = (1 - eccentricity) * orbital_radius;
+
+	// define forbidden zone
+	forbidden_zone_inner = eccentricity_min / 3;
+	forbidden_zone_outer = eccentricity_max * 3;
 }
 
 void Star::define_System_Pointer(StarSystemStats* parent)
@@ -774,4 +778,27 @@ void Star::gen_Mass(bool garden_planet_present)
 
 	
 
+}
+
+void Star::populate_Orbits(Star* parent_star)
+{
+	double inner_limit{ 0 };			// nearest possible orbit
+	double outer_limit{ 0 };			// furthest possible orbit
+	double snow_line{ 0 };				// start of normal gas giants, where water ice could exist during planetary formation
+	
+	// define inner limit
+	if ((stellar_mass * 0.1) >= (sqrt(luminosity) * 0.01))
+	{
+		inner_limit = stellar_mass * 0.1;
+	}
+	else
+	{
+		inner_limit = sqrt(luminosity) * 0.01;
+	}
+
+	// define outer limit
+	outer_limit = stellar_mass * 40;
+
+	// define snow line
+	snow_line = 4.85 * sqrt(s_span * (l_max - l_min)) / l_min;
 }

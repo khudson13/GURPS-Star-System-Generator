@@ -37,7 +37,6 @@ int main()
             NewSystem.get_Star(i)->gen_Mass(NewSystem.get_Garden_Planet_Status());
             NewSystem.get_Star(i)->gen_Characteristics();
             NewSystem.get_Star(i)->define_Life_Phase();
-            NewSystem.get_Star(i)->define_Orbital_Radius();
         }
         else
         {
