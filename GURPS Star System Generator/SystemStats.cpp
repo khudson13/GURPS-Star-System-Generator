@@ -11,14 +11,14 @@
 //***************
 StarSystemStats::StarSystemStats()
 {
-	char response{ ' ' }; // store user's yes/no
-	std::cout << "Does this system include a pregenerated garden world? (y/n): ";
-	std::cin >> response;
+	//char response{ ' ' }; // store user's yes/no
+	//std::cout << "Does this system include a pregenerated garden world? (y/n): ";
+	//std::cin >> response;
 	// ADD ERROR HANDLING AND CLEAR THE STREAM
-	if (response == 'y' || response == 'Y')
-	{
-		pregen_garden_planet = true;
-	}
+	//if (response == 'y' || response == 'Y')
+	//{
+	//	pregen_garden_planet = true;
+	//}
 	
 	// run generator functs
 	StarSystemStats::set_Num_of_Stars();

@@ -20,7 +20,7 @@ Currently this always creates the same filename. Probably best to let the user e
 
 #include "SystemStats.h"
 #include "Star.h"
-#include "Planet.h"
+#include "Orbit.h"
 
 
 int main()

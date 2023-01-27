@@ -800,5 +800,101 @@ void Star::populate_Orbits(Star* parent_star)
 	outer_limit = stellar_mass * 40;
 
 	// define snow line
-	snow_line = 4.85 * sqrt(s_span * (l_max - l_min)) / l_min;
+	snow_line = 4.85 * sqrt(l_min);
+
+	// find gas giant arrangement
+	std::string giant_arrangement{ "" };
+
+	int roll{ Dice::roll_D6(3) };
+	if (roll <= 10)
+	{
+		giant_arrangement = "none";				// no gas giants
+	}
+	else if (roll >= 11 && roll <= 12)
+	{
+		giant_arrangement = "conventional";		// gas giants only beyond snow line
+	}
+	else if (roll >= 13 && roll <= 14)
+	{
+		giant_arrangement = "eccentric";		// some giants unusually close to star
+	}
+	else
+	{
+		giant_arrangement = "epistellar";		// some giants extremely close to star
+	}
+
+	// place first gas giant
+	double starting_orbit{ 0 };			// store orbit of first gas giant for later use
+	if (giant_arrangement == "none")
+	{
+		starting_orbit = outer_limit;  // it's because of this one that distance has to be stored right away rather than after the ifs
+	}
+	else if (giant_arrangement == "conventional")
+	{
+		orbits_deq.push_front(new Orbit((((Dice::roll_D6(2) - 2) * 0.05) + 1) * snow_line));
+		starting_orbit = orbits_deq[0]->get_Distance();
+		orbits_deq[0]->set_Type("Gas Giant");
+	}
+	else if (giant_arrangement == "eccentric")
+	{
+		orbits_deq.push_front(new Orbit((Dice::roll_D6(1) * 0.125) * snow_line));
+		starting_orbit = orbits_deq[0]->get_Distance();
+		orbits_deq[0]->set_Type("Gas Giant");
+	}
+	else if (giant_arrangement == "epistellar")
+	{
+		orbits_deq.push_front(new Orbit((Dice::roll_D6(3) * 0.1) * inner_limit));
+		starting_orbit = orbits_deq[0]->get_Distance();
+		orbits_deq[0]->set_Type("Gas Giant");
+	}
+
+	// define the rest of the orbits
+	// outer orbits first
+	if (starting_orbit != outer_limit)
+	{
+		double previous_orbit{ starting_orbit };
+		double next_orbit{ starting_orbit };
+		do
+		{
+			// define variance of distance to next orbit
+			int orbit_roll{ Dice::roll_D6(3) };
+			double variance{ 0 };
+			if (orbit_roll >= 3 && orbit_roll <= 4)
+			{
+				variance = 1.4;
+			}
+			else if (orbit_roll >= 5 && orbit_roll <= 6)
+			{
+				variance = 1.5;
+			}
+			else if (orbit_roll >= 7 && orbit_roll <= 8)
+			{
+				variance = 1.6;
+			}
+			else if (orbit_roll >= 9 && orbit_roll <= 12)
+			{
+				variance = 1.7;
+			}
+			else if (orbit_roll >= 13 && orbit_roll <= 14)
+			{
+				variance = 1.8;
+			}
+			else if (orbit_roll >= 15 && orbit_roll <= 16)
+			{
+				variance = 1.9;
+			}
+			else
+			{
+				variance = 2;
+			}
+
+			// define and place next orbit
+			next_orbit = previous_orbit * variance;
+			if (next_orbit <= outer_limit && next_orbit >= (previous_orbit + 0.15))
+			{
+				orbits_deq.push_back(new Orbit(next_orbit));
+			}
+
+		} while (next_orbit <= outer_limit);
+	}
 }

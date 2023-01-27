@@ -2,8 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 
-#include "Planet.h"
+#include "Orbit.h"
 
 class StarSystemStats;	// including "SystemStats.h" creates a weird circular dependence, this seems to be better
 
@@ -16,7 +17,7 @@ private:
 	int name{ 0 };										// numbered, to remember which companion it is (0 == primary)
 	StarSystemStats* star_system_pointer{ nullptr };	// pointer to star system object
 	std::vector<Star*> companion_vec;					// vector of companion stars *I don't think I ever used this, just reference the star_vec in SystemStats
-	std::vector<Planet*> orbits_vec;					// list of planets, asteroid belts, etc
+	std::deque<Orbit*> orbits_deq;						// list of planets, asteroid belts, etc (generated starting in middle, hence use of deque)
 
 	bool has_companion{ false };		// does this star have a companion
 	int num_of_companions{ 0 };			// number of companions this star has
