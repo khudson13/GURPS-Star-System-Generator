@@ -892,7 +892,10 @@ void Star::populate_Orbits(Star* parent_star)
 			next_orbit = previous_orbit * variance;
 			if (next_orbit <= outer_limit && next_orbit >= (previous_orbit + 0.15))
 			{
-				orbits_deq.push_back(new Orbit(next_orbit));
+				if (!(next_orbit >= forbidden_zone_inner && next_orbit <= forbidden_zone_outer))
+				{
+					orbits_deq.push_back(new Orbit(next_orbit));
+				}
 			}
 			previous_orbit = next_orbit;
 
@@ -942,7 +945,10 @@ void Star::populate_Orbits(Star* parent_star)
 			next_orbit = previous_orbit / variance;
 			if (next_orbit >= inner_limit && next_orbit <= (previous_orbit - 0.15))
 			{
-				orbits_deq.push_front(new Orbit(next_orbit));
+				if (!(next_orbit >= forbidden_zone_inner && next_orbit <= forbidden_zone_outer))
+				{
+					orbits_deq.push_front(new Orbit(next_orbit));
+				}
 			}
 			previous_orbit = next_orbit;
 
