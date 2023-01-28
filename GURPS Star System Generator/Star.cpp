@@ -850,15 +850,15 @@ void Star::populate_Orbits(Star* parent_star)
 
 	// define the rest of the orbits
 	// outer orbits first
-	if (starting_orbit != outer_limit)
+	if (starting_orbit >= outer_limit)
 	{
 		double previous_orbit{ starting_orbit };
 		double next_orbit{ starting_orbit };
+		int orbit_roll{ Dice::roll_D6(3) };
+		double variance{ 0 };
 		do
 		{
 			// define variance of distance to next orbit
-			int orbit_roll{ Dice::roll_D6(3) };
-			double variance{ 0 };
 			if (orbit_roll >= 3 && orbit_roll <= 4)
 			{
 				variance = 1.4;
@@ -894,7 +894,58 @@ void Star::populate_Orbits(Star* parent_star)
 			{
 				orbits_deq.push_back(new Orbit(next_orbit));
 			}
+			previous_orbit = next_orbit;
 
 		} while (next_orbit <= outer_limit);
+	}
+
+	// next do inner orbits
+	if (starting_orbit <= inner_limit)
+	{
+		double previous_orbit{ starting_orbit };
+		double next_orbit{ starting_orbit };
+		int orbit_roll{ Dice::roll_D6(3) };
+		double variance{ 0 };
+		do
+		{
+			// define variance of distance to next orbit
+			if (orbit_roll >= 3 && orbit_roll <= 4)
+			{
+				variance = 1.4;
+			}
+			else if (orbit_roll >= 5 && orbit_roll <= 6)
+			{
+				variance = 1.5;
+			}
+			else if (orbit_roll >= 7 && orbit_roll <= 8)
+			{
+				variance = 1.6;
+			}
+			else if (orbit_roll >= 9 && orbit_roll <= 12)
+			{
+				variance = 1.7;
+			}
+			else if (orbit_roll >= 13 && orbit_roll <= 14)
+			{
+				variance = 1.8;
+			}
+			else if (orbit_roll >= 15 && orbit_roll <= 16)
+			{
+				variance = 1.9;
+			}
+			else
+			{
+				variance = 2;
+			}
+
+			// define and place next orbit
+			next_orbit = previous_orbit / variance;
+			if (next_orbit >= inner_limit && next_orbit <= (previous_orbit - 0.15))
+			{
+				orbits_deq.push_front(new Orbit(next_orbit));
+			}
+			previous_orbit = next_orbit;
+
+		} while (next_orbit >= inner_limit);
 	}
 }
