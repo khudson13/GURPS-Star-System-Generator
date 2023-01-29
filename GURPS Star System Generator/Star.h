@@ -28,6 +28,7 @@ private:
 	double forbidden_zone_outer{ 0 };
 	double eccentricity_max{ 0 };		// maximum orbital eccentricity of companion
 	double eccentricity_min{ 0 };		// minimum orbital eccentricity of companion
+	std::string giant_arrangement{ "" };
 	std::string life_stage{ "" };		// life phase, main sequence, etc
 	double luminosity{ 0 };				// brightness of star
 	Star* primary{ nullptr };			// pointer to primary, if present
@@ -60,6 +61,7 @@ public:
 	double get_Eccentricity_Max();	// output maximum eccentricity
 	double get_Eccentricity_Min();	// output minimum eccentricity
 	std::string get_Life_Stage();	// output life phase
+	Orbit* get_Orbit(int indes);	// get orbit pointer from deque
 	double get_Luminosity();		// output luminosity
 	double get_L_Max();				// output l_max
 	double get_L_Min();				// output l-min
@@ -82,5 +84,5 @@ public:
 	void define_Orbital_Radius();					// find radius and eccentricity of companion orbit around primary
 	void define_System_Pointer(StarSystemStats*);	// set pointer to home system
 	void gen_Mass(bool garden_planet_present);		// generate value of stellar_mass (get pregen garden planet status from SystemStats)
-	void populate_Orbits(Star*);					// fill orbits with planets, pointer to parent star
+	void populate_Orbits();					// fill orbits with planets, pointer to parent star
 };

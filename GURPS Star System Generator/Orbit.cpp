@@ -13,6 +13,7 @@ Orbit::Orbit(double distance)
 
 // OUTPUTS
 double Orbit::get_Distance() { return orbital_distance; }
+std::string Orbit::get_Type() { return object_type; }
 
 // INSERTERS
 void Orbit::set_Type(std::string type)

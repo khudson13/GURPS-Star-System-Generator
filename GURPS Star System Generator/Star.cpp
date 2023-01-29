@@ -30,6 +30,7 @@ std::string Star::get_Separation() { return separation; }
 double Star::get_Eccentricity_Max() { return eccentricity_max; }
 double Star::get_Eccentricity_Min() { return eccentricity_min; }
 std::string Star::get_Life_Stage() { return life_stage; }
+Orbit* Star::get_Orbit(int index) { return orbits_deq[index]; }
 double Star::get_Luminosity() { return luminosity; };
 double Star::get_L_Max() { return l_max; }
 double Star::get_L_Min() { return l_min; }
@@ -780,7 +781,7 @@ void Star::gen_Mass(bool garden_planet_present)
 
 }
 
-void Star::populate_Orbits(Star* parent_star)
+void Star::populate_Orbits()
 {
 	double inner_limit{ 0 };			// nearest possible orbit
 	double outer_limit{ 0 };			// furthest possible orbit
@@ -803,8 +804,6 @@ void Star::populate_Orbits(Star* parent_star)
 	snow_line = 4.85 * sqrt(l_min);
 
 	// find gas giant arrangement
-	std::string giant_arrangement{ "" };
-
 	int roll{ Dice::roll_D6(3) };
 	if (roll <= 10)
 	{
@@ -954,4 +953,67 @@ void Star::populate_Orbits(Star* parent_star)
 
 		} while (next_orbit >= inner_limit);
 	}
+
+	// place gas giants
+	for (int i{ 0 }; i < orbits_deq.size(); ++i)
+	{
+		if (orbits_deq[i]->get_Type() == "")
+		{
+			if (giant_arrangement == "none")
+			{
+				// do nothing
+			}
+			else if (giant_arrangement == "conventional")
+			{
+				if (orbits_deq[i]->get_Distance() >= snow_line)
+				{
+					int roll{ Dice::roll_D6(3) };
+					if (roll <= 15)
+					{
+						orbits_deq[i]->set_Type("Gas Giant");
+					}
+				}
+			}
+			else if (giant_arrangement == "eccentric")
+			{
+				if (orbits_deq[i]->get_Distance() >= snow_line)
+				{
+					int roll{ Dice::roll_D6(3) };
+					if (roll <= 14)
+					{
+						orbits_deq[i]->set_Type("Gas Giant");
+					}
+				}
+				else
+				{
+					int roll{ Dice::roll_D6(3) };
+					if (roll <= 8)
+					{
+						orbits_deq[i]->set_Type("Gas Giant");
+					}
+				}
+			}
+			else if (giant_arrangement == "epistellar")
+			{
+				if (orbits_deq[i]->get_Distance() >= snow_line)
+				{
+					int roll{ Dice::roll_D6(3) };
+					if (roll <= 14)
+					{
+						orbits_deq[i]->set_Type("Gas Giant");
+					}
+				}
+				else
+				{
+					int roll{ Dice::roll_D6(3) };
+					if (roll <= 6)
+					{
+						orbits_deq[i]->set_Type("Gas Giant");
+					}
+				}
+			}
+		}
+	}
+
+	// place other orbital objects
 }

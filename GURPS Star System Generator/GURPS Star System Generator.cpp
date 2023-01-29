@@ -48,6 +48,13 @@ int main()
         }
     }
 
+    // GENERATE ORBITS
+    for (int i{ 0 }; i <= NewSystem.get_Num_of_Stars(); ++i)
+    {
+        NewSystem.get_Star(i)->populate_Orbits();
+    }
+
+
     // OUTPUT RESULTS
     System_Out << "Num of Stars: " << NewSystem.get_Num_of_Stars() << std::endl;
     System_Out << "System Age: " << NewSystem.get_Age() << std::endl << std::endl;

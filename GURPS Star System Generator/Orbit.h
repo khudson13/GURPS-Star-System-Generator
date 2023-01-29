@@ -20,4 +20,5 @@ public:
 
 	// OUTPUTS
 	double get_Distance();
+	std::string get_Type();
 };
