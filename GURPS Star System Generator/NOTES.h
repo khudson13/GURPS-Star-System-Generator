@@ -6,7 +6,7 @@
 
 - add potential companion of second companion to Star.cpp define_Orbital_Radius()
 
-- add mass generator for garden stars
+- remove code for handling pregen garden worlds
 
 
 

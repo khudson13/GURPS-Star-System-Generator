@@ -29,8 +29,10 @@ double Star::get_Orbital_Radius() { return orbital_radius; }
 std::string Star::get_Separation() { return separation; }
 double Star::get_Eccentricity_Max() { return eccentricity_max; }
 double Star::get_Eccentricity_Min() { return eccentricity_min; }
+std::string Star::get_Giant_Spacing() { return giant_arrangement; }
 std::string Star::get_Life_Stage() { return life_stage; }
 Orbit* Star::get_Orbit(int index) { return orbits_deq[index]; }
+int Star::get_Num_of_Orbits() { return orbits_deq.size(); }
 double Star::get_Luminosity() { return luminosity; };
 double Star::get_L_Max() { return l_max; }
 double Star::get_L_Min() { return l_min; }
@@ -849,7 +851,7 @@ void Star::populate_Orbits()
 
 	// define the rest of the orbits
 	// outer orbits first
-	if (starting_orbit >= outer_limit)
+	if (starting_orbit <= outer_limit)
 	{
 		double previous_orbit{ starting_orbit };
 		double next_orbit{ starting_orbit };
@@ -902,7 +904,7 @@ void Star::populate_Orbits()
 	}
 
 	// next do inner orbits
-	if (starting_orbit <= inner_limit)
+	if (starting_orbit >= inner_limit)
 	{
 		double previous_orbit{ starting_orbit };
 		double next_orbit{ starting_orbit };
@@ -1016,4 +1018,81 @@ void Star::populate_Orbits()
 	}
 
 	// place other orbital objects
+	for (int i{ 0 }; i < orbits_deq.size(); ++i)
+	{
+		// if there's already a gas giant
+		if (orbits_deq[i]->get_Type() != "Gas Giant")
+		{
+			int roll{ Dice::roll_D6(3) };
+			// modify roll
+			// if close to forbidden zone
+			if (((orbits_deq[i]->get_Distance() * 2) >= forbidden_zone_inner && (orbits_deq[i]->get_Distance() * 2) <= forbidden_zone_outer) ||
+				(orbits_deq[i]->get_Distance() / 2) <= forbidden_zone_outer && (orbits_deq[i]->get_Distance() / 2) >= forbidden_zone_inner)
+			{
+				roll -= 6;
+			}
+			// if next orbit out is a gas giant
+			if ((i + 1) < orbits_deq.size())
+			{
+				if (orbits_deq[i + 1]->get_Type() == "Gas Giant")
+				{
+					roll -= 6;
+				}
+			}
+			// if previous orbit is a gas giant
+			if ((i - 1) > -1)
+			{
+				if (orbits_deq[i - 1]->get_Type() == "Gas Giant")
+				{
+					roll -= 3;
+				}
+			}
+			// if this is the innermost orbit
+			if (i == 0)
+			{
+				roll -= 3;
+			}
+			// if this is the outermost orbit
+			if ((orbits_deq.size() - 1) == i)
+			{
+				roll -= 3;
+			}
+
+			// place object
+			if (roll <= 3)
+			{
+				// do nothing, this orbit is empty
+			}
+			else if (roll >= 4 && roll <= 6)
+			{
+				orbits_deq[i]->set_Type("Asteroid Belt");
+				orbits_deq[i]->gen_Asteroid_Belt();
+			}
+			else if (roll >= 7 && roll <= 8)
+			{
+				orbits_deq[i]->set_Type("Tiny Terrestrial");
+				orbits_deq[i]->gen_Terrestrial_Planet();
+			}
+			else if (roll >= 9 && roll <= 11)
+			{
+				orbits_deq[i]->set_Type("Small Terrestrial");
+				orbits_deq[i]->gen_Terrestrial_Planet();
+			}
+			else if (roll >= 12 && roll <= 15)
+			{
+				orbits_deq[i]->set_Type("Standard Terrestrial");
+				orbits_deq[i]->gen_Terrestrial_Planet();
+			}
+			else if (roll >= 16)
+			{
+				orbits_deq[i]->set_Type("Large Terrestrial");
+				orbits_deq[i]->gen_Terrestrial_Planet();
+			}
+		}
+		// if it's still empty (only gas giants have been placed at this point)
+		else
+		{
+			orbits_deq[i]->gen_Gas_Giant();
+		}
+	}
 }

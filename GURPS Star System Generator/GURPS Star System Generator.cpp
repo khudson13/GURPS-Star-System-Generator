@@ -49,7 +49,7 @@ int main()
     }
 
     // GENERATE ORBITS
-    for (int i{ 0 }; i <= NewSystem.get_Num_of_Stars(); ++i)
+    for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
         NewSystem.get_Star(i)->populate_Orbits();
     }
@@ -57,7 +57,7 @@ int main()
 
     // OUTPUT RESULTS
     System_Out << "Num of Stars: " << NewSystem.get_Num_of_Stars() << std::endl;
-    System_Out << "System Age: " << NewSystem.get_Age() << std::endl << std::endl;
+    System_Out << "System Age: " << NewSystem.get_Age() << " billion years" << std::endl << std::endl;
 
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
@@ -74,6 +74,21 @@ int main()
             System_Out << "Average Orbital Radius: " << NewSystem.get_Star(i)->get_Orbital_Radius() << std::endl;
             System_Out << "Max Orbital Eccentricity: " << NewSystem.get_Star(i)->get_Eccentricity_Max() << std::endl;
             System_Out << "Min Orbital Eccentricity: " << NewSystem.get_Star(i)->get_Eccentricity_Min() << std::endl;
+        }
+
+        System_Out << "Gas Giant Distribution: " << NewSystem.get_Star(i)->get_Giant_Spacing() << std::endl;
+
+        // OUTPUT ORBITS
+        System_Out << "ORBITING OBJECTS: " << NewSystem.get_Star(i)->get_Num_of_Orbits() << std::endl;
+        int orbit_number{ 1 };  // counting outward from star
+        for (int ii{ 0 }; ii < NewSystem.get_Star(i)->get_Num_of_Orbits(); ++ii)
+        {
+            if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() != "")
+            {
+                System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type();
+                System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << std::endl;
+                ++orbit_number;
+            }
         }
 
         System_Out << std::endl;

@@ -21,4 +21,9 @@ public:
 	// OUTPUTS
 	double get_Distance();
 	std::string get_Type();
+
+	// GENERATORS
+	void gen_Asteroid_Belt();
+	void gen_Gas_Giant();
+	void gen_Terrestrial_Planet();
 };

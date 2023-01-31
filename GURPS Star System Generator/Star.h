@@ -60,8 +60,10 @@ public:
 	std::string get_Separation();	// degree of separation from primary if companion
 	double get_Eccentricity_Max();	// output maximum eccentricity
 	double get_Eccentricity_Min();	// output minimum eccentricity
+	std::string get_Giant_Spacing();// average placement of gas giants
 	std::string get_Life_Stage();	// output life phase
 	Orbit* get_Orbit(int indes);	// get orbit pointer from deque
+	int get_Num_of_Orbits();		// get this stars number of orbits
 	double get_Luminosity();		// output luminosity
 	double get_L_Max();				// output l_max
 	double get_L_Min();				// output l-min

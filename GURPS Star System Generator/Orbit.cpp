@@ -20,3 +20,19 @@ void Orbit::set_Type(std::string type)
 {
 	object_type = type;
 }
+
+// GENERATORS
+void Orbit::gen_Asteroid_Belt()
+{
+
+}
+
+void Orbit::gen_Gas_Giant()
+{
+
+}
+
+void Orbit::gen_Terrestrial_Planet()
+{
+
+}
