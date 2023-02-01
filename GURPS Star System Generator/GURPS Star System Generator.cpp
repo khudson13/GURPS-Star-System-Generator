@@ -86,7 +86,7 @@ int main()
         {
             if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() != "")
             {
-                System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type();
+                System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type();
                 System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
                 ++orbit_number;
             }
@@ -103,6 +103,10 @@ int main()
         for (int ii{ 0 }; ii < NewSystem.get_Star(i)->get_Num_of_Orbits(); ++ii)
         {
             System_Out << "Orbit " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() << std::endl;
+            if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type() != "")
+            {
+                System_Out << "Orbit " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type() << std::endl;
+            }
             System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
             std::string planet_type{ NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() };
             if (planet_type == "Small Gas Giant" || planet_type == "Medium Gas Giant" || planet_type == "Large Gas Giant")
