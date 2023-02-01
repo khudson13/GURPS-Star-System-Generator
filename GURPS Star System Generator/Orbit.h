@@ -29,6 +29,7 @@ private:
 	// detail data
 	double age{ 0 };					// age of system
 	std::string atmosphere{ "" };		// type of atmosphere
+	double atmosphere_mass{ 0 };		// mass of atmosphere
 	double blackbody_temp{ 0 };			// inscrutable astronomical number needed for other calculations
 	double parent_mass{ 0 };			// mass of parent star
 

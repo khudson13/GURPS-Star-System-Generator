@@ -356,6 +356,80 @@ void Orbit::gen_Terrestrial_Planet()
 	{
 		atmosphere = "None";
 	}
+	else if (specific_type == "Small Ice-ball")
+	{
+		atmosphere = "Nitrogen, Methane, ";
+		if (Dice::roll_D6(3) <= 15)
+		{
+			atmosphere += "Suffocating and Mildly Toxic";
+		}
+		else
+		{
+			atmosphere += "Suffocating and Highly Toxic";
+		}
+	}
+	else if (specific_type == "Standard Ammonia")
+	{
+		atmosphere = "Nitrogen, Ammonia, and Methane. Suffocating, Lethally Toxic, and Corrosive";
+	}
+	else if (specific_type == "Standard Ice-ball")
+	{
+		atmosphere = "Nitrogen and Carbon Dioxide. Suffocating";
+		if (Dice::roll_D6(3) > 12)
+		{
+			atmosphere += " and Mildly Toxic";
+		}
+	}
+	else if (specific_type == "Standard Ocean")
+	{
+		atmosphere = "Nitrogen and Carbon Dioxide. Suffocating";
+		if (Dice::roll_D6(3) > 12)
+		{
+			atmosphere += " and Mildly Toxic";
+		}
+	}
+	else if (specific_type == "Standard Garden")
+	{
+		atmosphere = "Nitrogen and Oxygen";
+		if (Dice::roll_D6(3) >= 12)
+		{
+			atmosphere += ", with complications";
+		}
+	}
+	else if (specific_type == "Standard Greenhouse")
+	{
+		atmosphere = "Dense Carbon Dioxide or Highly Humid Nitrogen Based. Suffocating, Lethally Toxic, Corrosive";
+	}
+	else if (specific_type == "Large Ammonia")
+	{
+		atmosphere = "Helium, Ammonia, and Methane. Suffocating, Lethally Toxic, and Corrosive";
+	}
+	else if (specific_type == "Large Ice-ball")
+	{
+		atmosphere = "Helium, Nitroge, Volcanic Toxins. Suffocating, Highly Toxic";
+	}
+	else if (specific_type == "Large Ocean")
+	{
+		atmosphere = "Helium, Nitroge, Volcanic Toxins. Suffocating, Highly Toxic";
+	}
+	else if (specific_type == "Large Garden")
+	{
+		atmosphere = "Nitrogen, Oxygen, Noble Gases";
+		if (Dice::roll_D6(3) >= 12)
+		{
+			atmosphere += ", with complications";
+		}
+	}
+	else if (specific_type == "Large Greenhouse")
+	{
+		atmosphere = "Dense Carbon Dioxide or Highly Humid Nitrogen Based. Suffocating, Lethally Toxic, Corrosive";
+	}
+
+	// find atmospheric mass
+	if (atmosphere != "None")
+	{
+		atmosphere_mass = Dice::roll_D6(3) / 10;
+	}
 
 	gen_Terrestrial_Moons();
 }
