@@ -130,11 +130,13 @@
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="GURPS Star System Generator.cpp" />
     <ClCompile Include="Orbit.cpp" />
+    <ClCompile Include="Moon.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="SystemStats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="Moon.h" />
     <ClInclude Include="NOTES.h" />
     <ClInclude Include="Orbit.h" />
     <ClInclude Include="Star.h" />

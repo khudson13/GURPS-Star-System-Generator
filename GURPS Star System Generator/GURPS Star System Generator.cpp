@@ -13,6 +13,7 @@ Currently this always creates the same filename. Probably best to let the user e
 //********************
 #include <fstream>
 #include <iostream>
+#include <string>
 
 //********************
 // PERSONAL INCLUDES *
@@ -86,13 +87,50 @@ int main()
             if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() != "")
             {
                 System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type();
-                System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << std::endl;
+                System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
                 ++orbit_number;
             }
         }
 
-        System_Out << std::endl;
+        System_Out << std::endl << std::endl;
     }
+
+    // OUTPUT ORBITAL OBJECT DETAILS
+    System_Out << std::endl << std::endl << "*** ORBITAL BODY DETAILS ***" << std::endl << std::endl;
+    for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
+    {
+        System_Out << "Star: " << i + 1 << std::endl << std::endl;
+        for (int ii{ 0 }; ii < NewSystem.get_Star(i)->get_Num_of_Orbits(); ++ii)
+        {
+            System_Out << "Orbit " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() << std::endl;
+            System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
+            std::string planet_type{ NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() };
+            if (planet_type == "Small Gas Giant" || planet_type == "Medium Gas Giant" || planet_type == "Large Gas Giant")
+            {
+                System_Out << "  Rings: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Rings() << std::endl;
+                System_Out << "  Inner Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Inner_Family() << " moonlets" << std::endl;
+                System_Out << "  Middle Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() << " moons" << std::endl;
+                System_Out << "  Outer Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Outer_Family() << " moonlets" << std::endl;
+            }
+            if (planet_type == "Tiny Terrestrial" || planet_type == "Small Terrestrial" || planet_type == "Standard Terrestrial" || planet_type == "Large Terrestrial")
+            {
+                if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
+                {
+                    System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() << std::endl;
+                }
+                else if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moonlets() > 0)
+                {
+                    System_Out << "  Moonlets: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moonlets() << std::endl;
+                }
+            }
+            System_Out << std::endl;
+        }
+
+        System_Out << std::endl << std::endl;
+
+    }
+
+    System_Out << std::endl;
 
     System_Out.close();
 }

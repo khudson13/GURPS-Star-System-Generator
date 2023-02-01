@@ -30,6 +30,9 @@
     <ClCompile Include="Orbit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Moon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SystemStats.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NOTES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Moon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

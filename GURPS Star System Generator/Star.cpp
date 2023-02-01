@@ -1093,5 +1093,9 @@ void Star::populate_Orbits()
 		{
 			orbits_deq[i]->gen_Gas_Giant(l_min);
 		}
+		if (orbits_deq[i]->get_Type() == "")
+		{
+			orbits_deq[i]->set_Type("Empty");
+		}
 	}
 }
