@@ -8,7 +8,7 @@ private:
 	std::string size{ "" };
 
 public:
-	Moon();
+	Moon(std::string parent_type);
 
 	// OUTPUTS
 	std::string get_Size();

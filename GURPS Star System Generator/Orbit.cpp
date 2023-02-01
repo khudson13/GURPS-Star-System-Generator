@@ -116,7 +116,7 @@ void Orbit::gen_Giant_Moons()
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* moonptr{ new Moon };
+			Moon* moonptr{ new Moon(this->get_Type())};
 			middle_family.push_back(moonptr);
 		}
 	}
@@ -177,7 +177,7 @@ void Orbit::gen_Terrestrial_Moons()
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* new_moon{ new Moon };
+			Moon* new_moon{ new Moon(this->get_Type())};
 			moons_vec.push_back(new_moon);
 		}
 	}
@@ -217,6 +217,7 @@ void Orbit::gen_Terrestrial_Moons()
 
 void Orbit::gen_Terrestrial_Planet()
 {
+
 
 	gen_Terrestrial_Moons();
 }
