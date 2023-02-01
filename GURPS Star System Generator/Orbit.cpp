@@ -8,9 +8,12 @@
 //*********************
 
 // CONSTRUCTOR
-Orbit::Orbit(double distance)
+Orbit::Orbit(double distance, double parent_luminosity, double mass, double system_age)
 {
+	age = system_age;
+	parent_mass = mass;
 	orbital_distance = distance;
+	blackbody_temp = 278 * pow(parent_luminosity, 1 / 4) / sqrt(orbital_distance);
 }
 
 // OUTPUTS
@@ -19,9 +22,11 @@ int Orbit::count_Middle_Family() { return middle_family.size(); }
 int Orbit::count_Outer_Family() { return outer_family; }
 int Orbit::count_Moons() { return moons_vec.size(); }
 int Orbit::count_Moonlets() { return moonlets; }
+std::string Orbit::get_Atmosphere() { return atmosphere; }
 double Orbit::get_Distance() { return orbital_distance; }
 std::string Orbit::get_Rings() { return rings; }
 std::string Orbit::get_Type() { return object_type; }
+std::string Orbit::get_Specific_Type() { return specific_type; }
 
 // INSERTERS
 void Orbit::set_Type(std::string type)
@@ -217,7 +222,140 @@ void Orbit::gen_Terrestrial_Moons()
 
 void Orbit::gen_Terrestrial_Planet()
 {
+	// find world type
+	if (object_type == "Tiny Terrestrial")
+	{
+		if (blackbody_temp <= 140)
+		{
+			specific_type = "Tiny Ice-ball";
+		}
+		else if (blackbody_temp > 140)
+		{
+			specific_type = "Tiny Rock-ball";
+		}
+	}
+	else if (object_type == "Small Terrestrial")
+	{
+		if (blackbody_temp <= 80)
+		{
+			specific_type = "Small Hadean (p.76)";
+		}
+		else if (blackbody_temp > 80 && blackbody_temp <= 140)
+		{
+			specific_type = "Small Ice-ball";
+		}
+		else if (blackbody_temp > 140)
+		{
+			specific_type = "Small Rock-ball";
+		}
+	}
+	else if (object_type == "Standard Terrestrial")
+	{
+		if (blackbody_temp <= 80)
+		{
+			specific_type = "Standard Hadean (p.76)";
+		}
+		else if (blackbody_temp > 80 && blackbody_temp <= 150)
+		{
+			specific_type = "Standard Ice-ball";
+		}
+		else if (blackbody_temp > 150 && blackbody_temp <= 230)
+		{
+			if (parent_mass <= 0.65)
+			{
+				specific_type = "Standard Ammonia";
+			}
+			else
+			{
+				specific_type = "Standard Ice-ball";
+			}
+		}
+		else if (blackbody_temp > 230 && blackbody_temp <= 240)
+		{
+			specific_type = "Standard Ice-ball";
+		}
+		else if (blackbody_temp > 240 && blackbody_temp <= 320)
+		{
+			int garden_chance{ Dice::roll_D6(3) };
+			int garden_mod(static_cast<int>(age / 0.5));
+			if (garden_mod > 10)
+			{
+				garden_mod = 10;
+			}
+			garden_chance += garden_mod;
+			if (garden_chance >= 18)
+			{
+				specific_type = "Standard Garden";
+			}
+			else
+			{
+				specific_type = "Standard Ocean";
+			}
+		}
+		else if (blackbody_temp > 320 && blackbody_temp <= 500)
+		{
+			specific_type = "Standard Greenhouse";
+		}
+		else if (blackbody_temp > 500)
+		{
+			specific_type = "Standard Cthonian (p.76)";
+		}
+	}
+	else if (object_type == "Large Terrestrial")
+	{
+		if (blackbody_temp <= 150)
+		{
+			specific_type = "Large Ice-ball";
+		}
+		else if (blackbody_temp > 150 && blackbody_temp <= 230)
+		{
+			if (parent_mass <= 0.65)
+			{
+				specific_type = "Large Ammonia";
+			}
+			else
+			{
+				specific_type = "Large Ice-ball";
+			}
+		}
+		else if (blackbody_temp > 230 && blackbody_temp <= 240)
+		{
+			specific_type = "Large Ice-ball";
+		}
+		else if (blackbody_temp > 240 && blackbody_temp <= 320)
+		{
+			int garden_chance{ Dice::roll_D6(3) };
+			int garden_mod(static_cast<int>(age / 0.5));
+			if (garden_mod > 5)
+			{
+				garden_mod = 5;
+			}
+			garden_chance += garden_mod;
+			if (garden_chance >= 18)
+			{
+				specific_type = "Large Garden";
+			}
+			else
+			{
+				specific_type = "Large Ocean";
+			}
+		}
+		else if (blackbody_temp > 320 && blackbody_temp <= 500)
+		{
+			specific_type = "Large Greenhouse";
+		}
+		else if (blackbody_temp > 500)
+		{
+			specific_type = "Large Cthonian";
+		}
+	}
 
+	// find atmosphere
+	if (object_type == "Tiny Terrestrial" || specific_type == "Small Hadean" || specific_type == "Small Rock-ball" ||
+		specific_type == "Standard Cthonian" || specific_type == "Large Cthonian")
+	{
+		atmosphere = "None";
+	}
 
 	gen_Terrestrial_Moons();
 }

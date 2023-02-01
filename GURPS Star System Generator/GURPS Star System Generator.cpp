@@ -86,7 +86,7 @@ int main()
         {
             if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() != "")
             {
-                System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type();
+                System_Out << "Orbit " << orbit_number << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type();
                 System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
                 ++orbit_number;
             }

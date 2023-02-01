@@ -22,6 +22,7 @@ Star::Star(Star* prim, StarSystemStats* stats, int named)
 }
 
 // OUTPUT METHODS
+double Star::get_Age() { return star_system_pointer->get_Age(); }
 double Star::get_G_Span() { return g_span; }
 bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
@@ -832,19 +833,19 @@ void Star::populate_Orbits()
 	}
 	else if (giant_arrangement == "conventional")
 	{
-		orbits_deq.push_front(new Orbit((((Dice::roll_D6(2) - 2) * 0.05) + 1) * snow_line));
+		orbits_deq.push_front(new Orbit((((Dice::roll_D6(2) - 2) * 0.05) + 1) * snow_line, luminosity, stellar_mass, get_Age()));
 		starting_orbit = orbits_deq[0]->get_Distance();
 		orbits_deq[0]->set_Type("Gas Giant");
 	}
 	else if (giant_arrangement == "eccentric")
 	{
-		orbits_deq.push_front(new Orbit((Dice::roll_D6(1) * 0.125) * snow_line));
+		orbits_deq.push_front(new Orbit((Dice::roll_D6(1) * 0.125) * snow_line, luminosity, stellar_mass, get_Age()));
 		starting_orbit = orbits_deq[0]->get_Distance();
 		orbits_deq[0]->set_Type("Gas Giant");
 	}
 	else if (giant_arrangement == "epistellar")
 	{
-		orbits_deq.push_front(new Orbit((Dice::roll_D6(3) * 0.1) * inner_limit));
+		orbits_deq.push_front(new Orbit((Dice::roll_D6(3) * 0.1) * inner_limit, luminosity, stellar_mass, get_Age()));
 		starting_orbit = orbits_deq[0]->get_Distance();
 		orbits_deq[0]->set_Type("Gas Giant");
 	}
@@ -895,7 +896,7 @@ void Star::populate_Orbits()
 			{
 				if (!(next_orbit >= forbidden_zone_inner && next_orbit <= forbidden_zone_outer))
 				{
-					orbits_deq.push_back(new Orbit(next_orbit));
+					orbits_deq.push_back(new Orbit(next_orbit, luminosity, stellar_mass, get_Age()));
 				}
 			}
 			previous_orbit = next_orbit;
@@ -948,7 +949,7 @@ void Star::populate_Orbits()
 			{
 				if (!(next_orbit >= forbidden_zone_inner && next_orbit <= forbidden_zone_outer))
 				{
-					orbits_deq.push_front(new Orbit(next_orbit));
+					orbits_deq.push_front(new Orbit(next_orbit, luminosity, stellar_mass, get_Age()));
 				}
 			}
 			previous_orbit = next_orbit;

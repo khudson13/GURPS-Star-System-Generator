@@ -74,6 +74,7 @@ public:
 	Star* get_Primary();			// output pointer to primary star or nullptr
 	double get_Radius();			// output radius
 	std::string get_Spectral_Type();// output spectral type
+	double get_Age();				// get age of star
 	double get_Temp();				// output temp in kelvins
 
 
