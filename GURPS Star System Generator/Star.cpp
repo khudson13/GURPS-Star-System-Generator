@@ -1089,10 +1089,9 @@ void Star::populate_Orbits()
 				orbits_deq[i]->gen_Terrestrial_Planet();
 			}
 		}
-		// if it's still empty (only gas giants have been placed at this point)
-		else
+		else if (orbits_deq[i]->get_Type() == "Gas Giant")
 		{
-			orbits_deq[i]->gen_Gas_Giant();
+			orbits_deq[i]->gen_Gas_Giant(l_min);
 		}
 	}
 }

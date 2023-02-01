@@ -24,6 +24,8 @@ public:
 
 	// GENERATORS
 	void gen_Asteroid_Belt();
-	void gen_Gas_Giant();
+	void gen_Gas_Giant(double l_min);
+	void gen_Giant_Moons();
+	void gen_Terrestrial_Moons();
 	void gen_Terrestrial_Planet();
 };
