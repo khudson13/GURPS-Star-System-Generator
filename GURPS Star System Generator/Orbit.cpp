@@ -351,8 +351,8 @@ void Orbit::gen_Terrestrial_Planet()
 	}
 
 	// find atmosphere
-	if (object_type == "Tiny Terrestrial" || specific_type == "Small Hadean" || specific_type == "Small Rock-ball" ||
-		specific_type == "Standard Cthonian" || specific_type == "Large Cthonian")
+	if (object_type == "Tiny Terrestrial" || specific_type == "Small Hadean (p.76)" || specific_type == "Small Rock-ball" ||
+		specific_type == "Standard Hadean (p.76)" || specific_type == "Standard Cthonian (p.76)" || specific_type == "Large Cthonian (p.76)")
 	{
 		atmosphere = "None";
 	}
@@ -393,7 +393,45 @@ void Orbit::gen_Terrestrial_Planet()
 		atmosphere = "Nitrogen and Oxygen";
 		if (Dice::roll_D6(3) >= 12)
 		{
-			atmosphere += ", with complications";
+			int contaminant_roll{ Dice::roll_D6(3) };
+			switch (contaminant_roll)
+			{
+			case (3)	:
+			case (4)	:
+				atmosphere += " plus Chlorine Gas";
+				break;
+			case (5)	:
+			case (6)	:
+				atmosphere += " plus Sulfure Compounds";
+				break;
+			case (7)	:
+				atmosphere += " plus Nitrogen Compounds";
+				break;
+			case (8)	:
+			case (9)	:
+				atmosphere += " plus Organic Toxins";
+				break;
+			case (10)	:
+			case (11)	:
+				atmosphere += " but Low Oxygen";
+				break;
+			case (12)	:
+			case (13)	:
+				atmosphere += " plus Pollutants";
+				break;
+			case (14)	:
+				atmosphere += " plus High Carbon Dioxide";
+				break;
+			case (15)	:
+			case (16)	:
+				atmosphere += " but Dangerously High Oxygen";
+				break;
+			case (17)	:
+			case (18)	:
+				atmosphere += " pluss Excessive Inert Gasses (nitrogen narcosis risk)";
+				break;
+			}
+			atmosphere += " (p.80)";
 		}
 	}
 	else if (specific_type == "Standard Greenhouse")
@@ -417,7 +455,7 @@ void Orbit::gen_Terrestrial_Planet()
 		atmosphere = "Nitrogen, Oxygen, Noble Gases";
 		if (Dice::roll_D6(3) >= 12)
 		{
-			atmosphere += ", with complications";
+			atmosphere += ", with complications (p.80)";
 		}
 	}
 	else if (specific_type == "Large Greenhouse")
@@ -430,6 +468,8 @@ void Orbit::gen_Terrestrial_Planet()
 	{
 		atmosphere_mass = Dice::roll_D6(3) / 10;
 	}
+
+	// find hydrosphere
 
 	gen_Terrestrial_Moons();
 }
