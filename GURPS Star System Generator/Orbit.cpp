@@ -29,8 +29,10 @@ double Orbit::get_Diameter() { return diameter; }
 double Orbit::get_Distance() { return orbital_distance; }
 double Orbit::get_Gravity() { return gravity; }
 std::string Orbit::get_Hydrosphere() { return hydrosphere; }
+double Orbit::get_Day_Length() { return length_of_day; }
 double Orbit::get_Mass() { return planetary_mass; }
 double Orbit::get_Orbital_Period() { return orbital_period; }
+bool Orbit::get_Tidal_Lock() { return tidally_locked; }
 std::string Orbit::get_Rings() { return rings; }
 std::string Orbit::get_Type() { return object_type; }
 std::string Orbit::get_Specific_Type() { return specific_type; }
@@ -962,4 +964,94 @@ void Orbit::gen_Terrestrial_Planet()
 	orbital_period = sqrt(pow(orbital_distance, 3) / parent_mass);
 
 	gen_Terrestrial_Moons();
+
+	// find tidal braking
+	// from moons
+	for (int i{ 0 }; i < moons_vec.size(); ++i)
+	{
+		total_tidal_force += (2230000 * moons_vec[i]->get_Lunar_Mass() * diameter) / pow(((moons_vec[i]->get_Orbital_Distance()/ planetary_mass) * 7930), 3);
+	}
+	// from star
+	total_tidal_force += (0.46 * parent_mass * diameter) / pow(orbital_distance, 3);
+	// final
+	total_tidal_force = (total_tidal_force * age) / planetary_mass;
+	// check for tidal lock
+	if (total_tidal_force >= 50)
+	{
+		tidally_locked = true;
+	}
+
+	// find length of day
+	int day_roll{ Dice::roll_D6(3) };
+	int temp{ 0 };
+	if (day_roll >= 16)
+	{
+		temp = day_roll;
+		day_roll = -1; // slow orbit
+	}
+	else // modify by planet type
+	{
+		if (object_type == "Small Gas Giant" || object_type == "Large Terrestrial")
+		{
+			day_roll += 6;
+		}
+		else if (object_type == "Standard Terrestrial")
+		{
+			day_roll += 10;
+		}
+		else if (object_type == "Small Terrestrial")
+		{
+			day_roll += 14;
+		}
+		else if (object_type == "Tiny Terrestrial")
+		{
+			day_roll += 18;
+		}
+	}
+
+	if (day_roll == -1 || day_roll > 36)
+	{
+		int slow_roll{ Dice::roll_D6(2) };
+		if (slow_roll <= 6)
+		{
+			if (day_roll == -1)
+			{
+				day_roll = temp;
+			}
+			else
+			{
+				// keep original roll
+			}
+		}
+		else if (slow_roll == 7)
+		{
+			day_roll = (Dice::roll_D6(1) * 2) * 24;
+		}
+		else if (slow_roll == 8)
+		{
+			day_roll = (Dice::roll_D6(1) * 5) * 24;
+		}
+		else if (slow_roll == 9)
+		{
+			day_roll = (Dice::roll_D6(1) * 10) * 24;
+		}
+		else if (slow_roll == 10)
+		{
+			day_roll = (Dice::roll_D6(1) * 20) * 24;
+		}
+		else if (slow_roll == 11)
+		{
+			day_roll = (Dice::roll_D6(1) * 50) * 24;
+		}
+		else if (slow_roll == 12)
+		{
+			day_roll = (Dice::roll_D6(1) * 100) * 24;
+		}
+	}
+
+	length_of_day = day_roll + total_tidal_force;
+	if (((length_of_day / 24) / 365) >= orbital_period)
+	{
+		tidally_locked = true;
+	}
 }

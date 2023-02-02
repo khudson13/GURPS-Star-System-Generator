@@ -138,6 +138,14 @@ int main()
                         System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Gravity() << " Gs" << std::endl;
                         System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Lunar_Mass() << " Earths" << std::endl;
                         System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Orbital_Period() << " days" << std::endl;
+                        if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Tidal_Lock())
+                        {
+                            System_Out << "  Day Length: " << "TIDALLY LOCKED" << std::endl;
+                        }
+                        else
+                        {
+                            System_Out << "  Day Length: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Day_Length() << " hours" << std::endl;
+                        }
                         System_Out << std::endl;
                     }
                     System_Out << "* END MOONS *" << std::endl << std::endl;
@@ -156,6 +164,14 @@ int main()
                 System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gravity() << " Gs" << std::endl;
                 System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Mass() << " Earths" << std::endl;
                 System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Orbital_Period() << " years" << std::endl;
+                if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Tidal_Lock())
+                {
+                    System_Out << "  Day Length: " << "TIDALLY LOCKED" << std::endl;
+                }
+                else
+                {
+                    System_Out << "  Day Length: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Day_Length() << " hours" << std::endl;
+                }
                 // output moons
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
@@ -177,6 +193,14 @@ int main()
                         System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Gravity() << " Gs" << std::endl;
                         System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Lunar_Mass() << " Earths" << std::endl;
                         System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Orbital_Period() << " days" << std::endl;
+                        if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Tidal_Lock())
+                        {
+                            System_Out << "  Day Length: " << "TIDALLY LOCKED" << std::endl;
+                        }
+                        else
+                        {
+                            System_Out << "  Day Length: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Day_Length() << " hours" << std::endl;
+                        }
                         System_Out << std::endl;
                     }
                     System_Out << "* END MOONS *" << std::endl << std::endl;

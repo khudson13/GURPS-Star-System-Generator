@@ -21,6 +21,7 @@ private:
 	bool gas_moon{ false };
 	double gravity{ 0 };
 	int hydro_coverage{ 0 };
+	double length_of_day{ 0 };
 	double lunar_mass{ 0 };
 	double orbital_distance{ 0 };		// orbital distance in planetary diameters
 	double orbital_period{ 0 };
@@ -30,6 +31,8 @@ private:
 	int orbit_position{ 0 };			// index in parent's moons vec
 	int size_difference{ 0 };			// difference in size between moon and parent
 	double stellar_mass{ 0 };			// mass of planet's primary star
+	int total_tidal_force{ 0 };
+	bool tidally_locked{ false };
 
 public:
 	Moon(std::string parent_type, int orbit_position, double star_mass, double planet_mass, double system_age, double p_diameter, bool gas_giant);
@@ -42,6 +45,7 @@ public:
 	std::string get_Atmosphere();
 	double get_Atmo_Pressure();
 	double get_Average_Temp();
+	double get_Day_Length();
 	double get_Density();
 	double get_Diameter();
 	double get_Gravity();
@@ -52,6 +56,7 @@ public:
 	double get_Orbital_Period();
 	std::string get_Size();
 	std::string get_Specific_Type();
+	bool get_Tidal_Lock();
 
 	// GENERATOR
 	void gen_Moon(double bb_temp);		// create this moon

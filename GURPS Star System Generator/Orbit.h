@@ -38,9 +38,12 @@ private:
 	double gravity{ 0 };					// gravity in Gs
 	std::string hydrosphere{ "" };			// liquid coverage
 	double hydro_coverage{ 0 };				// surface coverage
+	double length_of_day{ 0 };
 	double orbital_period{ 0 };				// orbital period in years
 	double planetary_mass{ 0 };				// mass of planet
 	double parent_mass{ 0 };				// mass of parent star
+	int total_tidal_force{ 0 };				// tidal forces applied to planet
+	bool tidally_locked{ false };			// tidal lock
 
 public:
 	Orbit(double distance, double parent_luminosity, double parent_mass, double age);
@@ -61,11 +64,13 @@ public:
 	double get_Distance();			// output orbital distance
 	double get_Gravity();			// output gravity
 	std::string get_Hydrosphere();	// output hydrosphere
+	double get_Day_Length();		// output length of day in hours
 	double get_Mass();				// output mass
 	double get_Orbital_Period();	// output orbital period
 	std::string get_Rings();		// output gas giant rings
 	std::string get_Type();			// output type of body
 	std::string get_Specific_Type();// output specific type
+	bool get_Tidal_Lock();			// check for tidal lock
 
 	Moon* get_Gas_Moon(int index);			// get a gas giant's moon
 	Moon* get_Terrestrial_Moon(int index);	// get a planet's moon

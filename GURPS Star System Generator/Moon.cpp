@@ -65,6 +65,7 @@ std::string Moon::get_Specific_Type() { return specific_type; }
 std::string Moon::get_Atmosphere() { return atmosphere; }
 double Moon::get_Atmo_Pressure() { return atmospheric_pressure; }
 double Moon::get_Average_Temp() { return average_surface_temperature; }
+double Moon::get_Day_Length() { return length_of_day; }
 double Moon::get_Density() { return density; }
 double Moon::get_Diameter() { return diameter; }
 double Moon::get_Gravity() { return gravity; }
@@ -73,6 +74,7 @@ int Moon::get_Hydro_Coverage() { return hydro_coverage; }
 double Moon::get_Lunar_Mass() { return lunar_mass; }
 double Moon::get_Orbital_Distance() { return orbital_distance ; }
 double Moon::get_Orbital_Period() { return orbital_period; }
+bool Moon::get_Tidal_Lock() { return tidally_locked; }
 
 void Moon::set_Position(int index) { orbit_position = index; }
 void Moon::set_Stellar_Mass(double mass) { stellar_mass = mass; }
@@ -591,4 +593,81 @@ void Moon::gen_Moon(double bb_temp)
 	// define orbital period
 
 	orbital_period = 0.166 * sqrt(pow((orbital_distance / 7930), 3) / (lunar_mass + parent_mass));
+
+	// find tidal braking
+	total_tidal_force = (2230000 * parent_mass * diameter) / orbital_distance;
+	if (total_tidal_force >= 50)
+	{
+		tidally_locked = true;
+	}
+
+	// find length of day
+	int day_roll{ Dice::roll_D6(3) };
+	int temp{ 0 };
+	if (day_roll >= 16)
+	{
+		temp = day_roll;
+		day_roll = -1; // slow orbit
+	}
+	else // modify by planet type
+	{
+		if (size == "Standard")
+		{
+			day_roll += 10;
+		}
+		else if (size == "Small")
+		{
+			day_roll += 14;
+		}
+		else if (size == "Tiny")
+		{
+			day_roll += 18;
+		}
+	}
+
+	if (day_roll == -1 || day_roll > 36)
+	{
+		int slow_roll{ Dice::roll_D6(2) };
+		if (slow_roll <= 6)
+		{
+			if (day_roll == -1)
+			{
+				day_roll = temp;
+			}
+			else
+			{
+				// keep original roll
+			}
+		}
+		else if (slow_roll == 7)
+		{
+			day_roll = (Dice::roll_D6(1) * 2) * 24;
+		}
+		else if (slow_roll == 8)
+		{
+			day_roll = (Dice::roll_D6(1) * 5) * 24;
+		}
+		else if (slow_roll == 9)
+		{
+			day_roll = (Dice::roll_D6(1) * 10) * 24;
+		}
+		else if (slow_roll == 10)
+		{
+			day_roll = (Dice::roll_D6(1) * 20) * 24;
+		}
+		else if (slow_roll == 11)
+		{
+			day_roll = (Dice::roll_D6(1) * 50) * 24;
+		}
+		else if (slow_roll == 12)
+		{
+			day_roll = (Dice::roll_D6(1) * 100) * 24;
+		}
+	}
+
+	length_of_day = day_roll + total_tidal_force;
+	if ((length_of_day / 24) >= orbital_period)
+	{
+		tidally_locked = true;
+	}
 }
