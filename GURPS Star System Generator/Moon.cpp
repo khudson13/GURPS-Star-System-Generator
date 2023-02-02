@@ -71,7 +71,7 @@ double Moon::get_Gravity() { return gravity; }
 std::string Moon::get_Hydrosphere() { return hydrosphere; }
 int Moon::get_Hydro_Coverage() { return hydro_coverage; }
 double Moon::get_Lunar_Mass() { return lunar_mass; }
-double Moon::get_Orbital_Distance() { return orbital_distance * diameter * 7930; }
+double Moon::get_Orbital_Distance() { return orbital_distance ; }
 double Moon::get_Orbital_Period() { return orbital_period; }
 
 void Moon::set_Position(int index) { orbit_position = index; }
@@ -572,7 +572,7 @@ void Moon::gen_Moon(double bb_temp)
 		{
 			moon_roll += Dice::roll_D6(2);
 		}
-		orbital_distance = static_cast<double>(moon_roll / 2) * parent_diameter;
+		orbital_distance = static_cast<double>(moon_roll / 2) * (parent_diameter * 7930);
 	}
 	else
 	{
@@ -585,9 +585,10 @@ void Moon::gen_Moon(double bb_temp)
 		{
 			moon_roll += 4;
 		}
-		orbital_distance = static_cast<double>(moon_roll * 2.5) * parent_diameter;
+		orbital_distance = static_cast<double>(moon_roll * 2.5) * (parent_diameter * 7930);
 	}
 
 	// define orbital period
-	orbital_period = 0.166 * sqrt(pow(orbital_distance, 3) / (lunar_mass + parent_mass));
+
+	orbital_period = 0.166 * sqrt(pow((orbital_distance / 7930), 3) / (lunar_mass + parent_mass));
 }

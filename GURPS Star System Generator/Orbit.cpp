@@ -234,8 +234,8 @@ void Orbit::gen_Gas_Giant(double l_min)
 		}
 	}
 
-	diameter = pow((planetary_mass / density), 1 / 3);
-
+	diameter = cbrt(planetary_mass / density);
+	
 	gen_Giant_Moons();
 }
 

@@ -112,6 +112,7 @@ int main()
             std::string planet_type{ NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() };
             if (planet_type == "Small Gas Giant" || planet_type == "Medium Gas Giant" || planet_type == "Large Gas Giant")
             {
+                System_Out << "  Diameter: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Diameter() << std::endl;
                 System_Out << "  Rings: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Rings() << std::endl;
                 System_Out << "  Inner Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Inner_Family() << " moonlets" << std::endl;
                 System_Out << "  Middle Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() << " moons" << std::endl;
