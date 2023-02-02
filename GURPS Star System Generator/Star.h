@@ -23,6 +23,7 @@ private:
 	int num_of_companions{ 0 };			// number of companions this star has
 	bool companion{ false };			// does this star orbit a primary?
 	double orbital_radius{ 0 };			// orbital radius if companion
+	double orbital_period{ 0 };			// orbital period in years if companion
 	std::string separation{ 0 };
 	double forbidden_zone_inner{ 0 };	// bounds of orbits forbidden to both companion and primary
 	double forbidden_zone_outer{ 0 };
@@ -57,6 +58,7 @@ public:
 	int get_Num_Of_Companions();	// output number of companions
 	bool get_Is_Companion();		// is this star a companion?
 	double get_Orbital_Radius();	// return orbital radius
+	double get_Orbital_Period();	// output orbital period in years
 	std::string get_Separation();	// degree of separation from primary if companion
 	double get_Eccentricity_Max();	// output maximum eccentricity
 	double get_Eccentricity_Min();	// output minimum eccentricity

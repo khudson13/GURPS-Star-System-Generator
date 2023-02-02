@@ -23,8 +23,14 @@ int Orbit::count_Outer_Family() { return outer_family; }
 int Orbit::count_Moons() { return moons_vec.size(); }
 int Orbit::count_Moonlets() { return moonlets; }
 std::string Orbit::get_Atmosphere() { return atmosphere; }
+double Orbit::get_Atmo_Pressure() { return atmospheric_pressure; }
+int Orbit::get_Average_Surface_Temp() { return average_surface_temperature; }
+double Orbit::get_Diameter() { return diameter; }
 double Orbit::get_Distance() { return orbital_distance; }
+double Orbit::get_Gravity() { return gravity; }
 std::string Orbit::get_Hydrosphere() { return hydrosphere; }
+double Orbit::get_Mass() { return planetary_mass; }
+double Orbit::get_Orbital_Period() { return orbital_period; }
 std::string Orbit::get_Rings() { return rings; }
 std::string Orbit::get_Type() { return object_type; }
 std::string Orbit::get_Specific_Type() { return specific_type; }
@@ -122,7 +128,7 @@ void Orbit::gen_Giant_Moons()
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* moonptr{ new Moon(this->get_Type())};
+			Moon* moonptr{ new Moon(this->get_Type(), moons_vec.size(), parent_mass, planetary_mass, age)};
 			middle_family.push_back(moonptr);
 		}
 	}
@@ -183,7 +189,7 @@ void Orbit::gen_Terrestrial_Moons()
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* new_moon{ new Moon(this->get_Type())};
+			Moon* new_moon{ new Moon(this->get_Type(), moons_vec.size(), parent_mass, planetary_mass, age)};
 			moons_vec.push_back(new_moon);
 		}
 	}
@@ -449,14 +455,52 @@ void Orbit::gen_Terrestrial_Planet()
 	}
 	else if (specific_type == "Large Ocean")
 	{
-		atmosphere = "Helium, Nitroge, Volcanic Toxins. Suffocating, Highly Toxic";
+		atmosphere = "Helium, Nitrogen, Volcanic Toxins. Suffocating, Highly Toxic";
 	}
 	else if (specific_type == "Large Garden")
 	{
 		atmosphere = "Nitrogen, Oxygen, Noble Gases";
 		if (Dice::roll_D6(3) >= 12)
 		{
-			atmosphere += ", with complications (p.80)";
+			int contaminant_roll{ Dice::roll_D6(3) };
+			switch (contaminant_roll)
+			{
+			case (3):
+			case (4):
+				atmosphere += " plus Chlorine Gas";
+				break;
+			case (5):
+			case (6):
+				atmosphere += " plus Sulfure Compounds";
+				break;
+			case (7):
+				atmosphere += " plus Nitrogen Compounds";
+				break;
+			case (8):
+			case (9):
+				atmosphere += " plus Organic Toxins";
+				break;
+			case (10):
+			case (11):
+				atmosphere += " but Low Oxygen";
+				break;
+			case (12):
+			case (13):
+				atmosphere += " plus Pollutants";
+				break;
+			case (14):
+				atmosphere += " plus High Carbon Dioxide";
+				break;
+			case (15):
+			case (16):
+				atmosphere += " but Dangerously High Oxygen";
+				break;
+			case (17):
+			case (18):
+				atmosphere += " pluss Excessive Inert Gasses (nitrogen narcosis risk)";
+				break;
+			}
+			atmosphere += " (p.80)";
 		}
 	}
 	else if (specific_type == "Large Greenhouse")
@@ -519,6 +563,7 @@ void Orbit::gen_Terrestrial_Planet()
 			}
 		}
 		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+		hydro_coverage = coverage;
 	}
 	else if (specific_type == "Standard Greenhouse" || specific_type == "Large Greenhouse")
 	{
@@ -530,6 +575,214 @@ void Orbit::gen_Terrestrial_Planet()
 		}
 		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
 	}
+
+	// define climate
+	double blackbody_correction{ 0 };
+	if (specific_type == "Tiny Ice-ball")
+	{
+		blackbody_correction = 0.86;
+	}
+	else if (specific_type == "Tiny Rock-ball")
+	{
+		blackbody_correction = 0.97;
+	}
+	else if (specific_type == "Small Hadean (p.76)")
+	{
+		blackbody_correction = 0.67;
+	}
+	else if (specific_type == "Small Ice-ball")
+	{
+		blackbody_correction = 0.93 * (1 + (atmosphere_mass * 0.1));
+	}
+	else if (specific_type == "Small Rock-ball")
+	{
+		blackbody_correction = 0.96;
+	}
+	else if (specific_type == "Standard Hadean (p.76)")
+	{
+		blackbody_correction = 0.67;
+	}
+	else if (specific_type == "Standard Ammonia" || specific_type == "Large Ammonia")
+	{
+		blackbody_correction = 0.84 * (1 + (atmosphere_mass * 0.2));
+	}
+	else if (specific_type == "Standard Ice-ball" || specific_type == "Large Ice-ball")
+	{
+		blackbody_correction = 0.86 * (1 + (atmosphere_mass * 0.2));
+	}
+	else if (specific_type == "Standard Ocean" || specific_type == "Large Ocean" ||
+		specific_type == "Standard Garden" || specific_type == "Large Garden")
+	{
+		if (hydro_coverage < 20)
+		{
+			blackbody_correction = 0.95 * (1 + (atmosphere_mass * 0.16));
+		}
+		else if (hydro_coverage > 20 && hydro_coverage <= 50)
+		{
+			blackbody_correction = 0.92 * (1 + (atmosphere_mass * 0.16));
+		}
+		else if (hydro_coverage > 50 && hydro_coverage <= 90)
+		{
+			blackbody_correction = 0.88 * (1 + (atmosphere_mass * 0.16));
+		}
+		else if (hydro_coverage > 90)
+		{
+			blackbody_correction = 0.84 * (1 + (atmosphere_mass * 0.16));
+		}
+	}
+	else if (specific_type == "Standard Greenhouse" || specific_type == "Large Greenhouse")
+	{
+		blackbody_correction = 0.77 * (1 + (atmosphere_mass * 2));
+	}
+	else if (specific_type == "Standard Cthonian (p.76)" || specific_type == "Large Cthonian (p.76)")
+	{
+		blackbody_correction = 0.97;
+	}
+	//***
+	average_surface_temperature = blackbody_temp * blackbody_correction;
+	//***
+
+	// find density
+	if (specific_type == "Tiny Ice-ball" || specific_type == "Small Hadean (p.76)" || specific_type == "Small Ice-ball" ||
+		specific_type == "Standard Hadean (p.76)" || specific_type == "Standard Ammonia" || specific_type == "Large Ammonia")
+	{
+		int density_roll{ Dice::roll_D6(3) };
+		if (density_roll >= 3 && density_roll <= 6)
+		{
+			density = 0.3;
+		}
+		else if (density_roll >= 7 && density_roll <= 10)
+		{
+			density = 0.4;
+		}
+		else if (density_roll >= 11 && density_roll <= 14)
+		{
+			density = 0.5;
+		}
+		else if (density_roll >= 15 && density_roll <= 17)
+		{
+			density = 0.7;
+		}
+		else if (density_roll == 18)
+		{
+			density = 0.7;
+		}
+	}
+	else if (specific_type == "Tiny Rock-ball" || specific_type == "Small Rock-ball")
+	{
+		int density_roll{ Dice::roll_D6(3) };
+		if (density_roll >= 3 && density_roll <= 6)
+		{
+			density = 0.6;
+		}
+		else if (density_roll >= 7 && density_roll <= 10)
+		{
+			density = 0.7;
+		}
+		else if (density_roll >= 11 && density_roll <= 14)
+		{
+			density = 0.8;
+		}
+		else if (density_roll >= 15 && density_roll <= 17)
+		{
+			density = 0.9;
+		}
+		else if (density_roll == 18)
+		{
+			density = 1;
+		}
+	}
+	else
+	{
+		int density_roll{ Dice::roll_D6(3) };
+		if (density_roll >= 3 && density_roll <= 6)
+		{
+			density = 0.8;
+		}
+		else if (density_roll >= 7 && density_roll <= 10)
+		{
+			density = 0.9;
+		}
+		else if (density_roll >= 11 && density_roll <= 14)
+		{
+			density = 1;
+		}
+		else if (density_roll >= 15 && density_roll <= 17)
+		{
+			density = 1.1;
+		}
+		else if (density_roll == 18)
+		{
+			density = 1.2;
+		}
+	}
+
+	// find diameter
+	if (object_type == "Tiny Terrestrial")
+	{
+		double minimum_diameter{ sqrt(blackbody_temp / density) * 0.004 };
+		double maximum_diameter{ sqrt(blackbody_temp / density) * 0.024 };
+		diameter = minimum_diameter + ((Dice::roll_D6(2) - 2) * ((maximum_diameter - minimum_diameter) / 10));
+	}
+	else if (object_type == "Small Terrestrial")
+	{
+		double minimum_diameter{ sqrt(blackbody_temp / density) * 0.024 };
+		double maximum_diameter{ sqrt(blackbody_temp / density) * 0.03 };
+		diameter = minimum_diameter + ((Dice::roll_D6(2) - 2) * ((maximum_diameter - minimum_diameter) / 10));
+	}
+	else if (object_type == "Standard Terrestrial")
+	{
+		double minimum_diameter{ sqrt(blackbody_temp / density) * 0.03 };
+		double maximum_diameter{ sqrt(blackbody_temp / density) * 0.065 };
+		diameter = minimum_diameter + ((Dice::roll_D6(2) - 2) * ((maximum_diameter - minimum_diameter) / 10));
+	}
+	else if (object_type == "Large Terrestrial")
+	{
+		double minimum_diameter{ sqrt(blackbody_temp / density) * 0.065 };
+		double maximum_diameter{ sqrt(blackbody_temp / density) * 0.091 };
+		diameter = minimum_diameter + ((Dice::roll_D6(2) - 2) * ((maximum_diameter - minimum_diameter) / 10));
+	}
+
+	// find gravity
+	gravity = density * diameter;
+
+	// find mass
+	planetary_mass = density * pow(diameter, 3);
+
+	// find atmospheric pressure
+	if (atmosphere == "None")
+	{
+		// do nothing
+	}
+	else if (object_type == "Small Terrestrial")
+	{
+		atmospheric_pressure = atmosphere_mass * gravity * 10;
+	}
+	else if (object_type == "Standard Terrestrial")
+	{
+		if (specific_type == "Standard Greenhouse")
+		{
+			atmospheric_pressure = atmosphere_mass * gravity * 100;
+		}
+		else
+		{
+			atmospheric_pressure = atmosphere_mass * gravity;
+		}
+	}
+	else if (object_type == "Large Terrestrial")
+	{
+		if (specific_type == "Large Greenhouse")
+		{
+			atmospheric_pressure = atmosphere_mass * gravity * 500;
+		}
+		else
+		{
+			atmospheric_pressure = atmosphere_mass * gravity * 5;
+		}
+	}
+
+	// define orbital period
+	orbital_period = sqrt(pow(orbital_distance, 3) / parent_mass);
 
 	gen_Terrestrial_Moons();
 }

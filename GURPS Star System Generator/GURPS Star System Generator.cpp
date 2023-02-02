@@ -69,6 +69,7 @@ int main()
         System_Out << "Life Phase: " << NewSystem.get_Star(i)->get_Life_Stage() << std::endl;
         System_Out << "Luminosity: " << NewSystem.get_Star(i)->get_Luminosity() << std::endl;
         System_Out << "Radius: " << NewSystem.get_Star(i)->get_Radius() << " AU" << std::endl;
+        System_Out << "Orbital Period: " << NewSystem.get_Star(i)->get_Orbital_Period() << " years" << std::endl;
         if (NewSystem.get_Star(i)->get_Is_Companion())
         {
             System_Out << "Separation from primary: " << NewSystem.get_Star(i)->get_Separation() << std::endl;
@@ -119,7 +120,16 @@ int main()
             if (planet_type == "Tiny Terrestrial" || planet_type == "Small Terrestrial" || planet_type == "Standard Terrestrial" || planet_type == "Large Terrestrial")
             {
                 System_Out << "  Atmosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Atmosphere() << std::endl;
+                System_Out << "  Atmospheric Pressure: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Atmo_Pressure() << " atmospheres" << std::endl;
                 System_Out << "  Hydrosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Hydrosphere() << std::endl;
+                double temp_fahrenheit{ ((static_cast<double>(NewSystem.get_Star(i)->get_Orbit(ii)->get_Average_Surface_Temp()) - 273.15) * 9/5) + 32};
+                temp_fahrenheit *= 100;
+                temp_fahrenheit = static_cast<double>((static_cast<int>(temp_fahrenheit))) / 100;
+                System_Out << "  Average Surface Temp: " << temp_fahrenheit << " degrees Fahrenheit" << std::endl;
+                System_Out << "  Diameter: " << (NewSystem.get_Star(i)->get_Orbit(ii)->get_Diameter()) * 7930 << " miles" << std::endl;
+                System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gravity() << " Gs" << std::endl;
+                System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Mass() << " Earths" << std::endl;
+                System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Orbital_Period() << " years" << std::endl;
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
                     System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() << std::endl;

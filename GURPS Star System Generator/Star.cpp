@@ -27,6 +27,7 @@ double Star::get_G_Span() { return g_span; }
 bool Star::get_Has_Companion(){ return has_companion; }
 bool Star::get_Is_Companion() { return companion; }
 double Star::get_Orbital_Radius() { return orbital_radius; }
+double Star::get_Orbital_Radius() { return orbital_period; }
 std::string Star::get_Separation() { return separation; }
 double Star::get_Eccentricity_Max() { return eccentricity_max; }
 double Star::get_Eccentricity_Min() { return eccentricity_min; }
@@ -205,6 +206,9 @@ void Star::define_Orbital_Radius()
 	// define forbidden zone
 	forbidden_zone_inner = eccentricity_min / 3;
 	forbidden_zone_outer = eccentricity_max * 3;
+
+	// define orbital period
+	orbital_period = sqrt(orbital_radius / (stellar_mass + star_system_pointer->get_Star(0)->get_Mass()));
 }
 
 void Star::define_System_Pointer(StarSystemStats* parent)
