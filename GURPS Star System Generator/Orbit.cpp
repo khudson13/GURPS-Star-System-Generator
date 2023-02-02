@@ -35,6 +35,9 @@ std::string Orbit::get_Rings() { return rings; }
 std::string Orbit::get_Type() { return object_type; }
 std::string Orbit::get_Specific_Type() { return specific_type; }
 
+Moon* Orbit::get_Gas_Moon(int index) { return middle_family[index]; }
+Moon* Orbit::get_Terrestrial_Moon(int index) { return moons_vec[index]; }
+
 // INSERTERS
 void Orbit::set_Type(std::string type)
 {

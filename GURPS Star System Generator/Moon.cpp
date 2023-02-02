@@ -59,8 +59,9 @@ Moon::Moon(std::string parent_type, int orbit_depth, double star_mass, double pl
 }
 
 std::string Moon::get_Size() { return size; }
+std::string Moon::get_Specific_Type() { return specific_type; }
 std::string Moon::get_Atmosphere() { return atmosphere; }
-double Moon::get_Atmospheric_Pressure() { return atmospheric_pressure; }
+double Moon::get_Atmo_Pressure() { return atmospheric_pressure; }
 double Moon::get_Average_Temp() { return average_surface_temperature; }
 double Moon::get_Density() { return density; }
 double Moon::get_Diameter() { return diameter; }

@@ -67,6 +67,9 @@ public:
 	std::string get_Type();			// output type of body
 	std::string get_Specific_Type();// output specific type
 
+	Moon* get_Gas_Moon(int index);			// get a gas giant's moon
+	Moon* get_Terrestrial_Moon(int index);	// get a planet's moon
+
 	// GENERATORS
 	void gen_Asteroid_Belt();
 	void gen_Gas_Giant(double l_min);

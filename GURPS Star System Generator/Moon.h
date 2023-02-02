@@ -38,7 +38,7 @@ public:
 
 	// OUTPUTS
 	std::string get_Atmosphere();
-	double get_Atmospheric_Pressure();
+	double get_Atmo_Pressure();
 	double get_Average_Temp();
 	double get_Density();
 	double get_Diameter();
@@ -49,6 +49,7 @@ public:
 	double get_Orbital_Distance();
 	double get_Orbital_Period();
 	std::string get_Size();
+	std::string get_Specific_Type();
 
 	// GENERATOR
 	void gen_Moon();		// create this moon
