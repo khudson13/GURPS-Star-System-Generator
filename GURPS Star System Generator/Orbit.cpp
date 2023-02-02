@@ -24,6 +24,7 @@ int Orbit::count_Moons() { return moons_vec.size(); }
 int Orbit::count_Moonlets() { return moonlets; }
 std::string Orbit::get_Atmosphere() { return atmosphere; }
 double Orbit::get_Distance() { return orbital_distance; }
+std::string Orbit::get_Hydrosphere() { return hydrosphere; }
 std::string Orbit::get_Rings() { return rings; }
 std::string Orbit::get_Type() { return object_type; }
 std::string Orbit::get_Specific_Type() { return specific_type; }
@@ -470,6 +471,65 @@ void Orbit::gen_Terrestrial_Planet()
 	}
 
 	// find hydrosphere
+	if (specific_type == "Tiny Rock-ball" || specific_type == "Tiny Ice-ball" || specific_type == "Small Rock-ball" ||
+		specific_type == "Small Hadean (p.76)" || specific_type == "Standard Hadean (p.76)" || 
+		specific_type == "Standard Cthonian  (p.76)" || specific_type == "Large Cthonian (p.76)")
+	{
+		hydrosphere = "None";
+	}
+	else if (specific_type == "Small Ice-ball")
+	{
+		hydrosphere = "Liquid Hydrocarbons " + std::to_string((Dice::roll_D6(1) + 2) * 10) + "% Surface Coverage";
+	}
+	else if (specific_type == "Standard Ammonia" || specific_type == "Large Ammonia")
+	{
+		hydrosphere = "Liquid Ammonia ";
+		int coverage{ (Dice::roll_D6(2) * 10) };
+		if (coverage > 100)
+		{
+			coverage = 100;
+		}
+		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+	}
+	else if (specific_type == "Standard Ice-ball" || specific_type == "Large Ice-ball")
+	{
+		hydrosphere = "Seasonal Water ";
+		int coverage{ (Dice::roll_D6(2) - 10) * 10 };
+		if (coverage < 0)
+		{
+			coverage = 0;
+		}
+		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+	}
+	else if (specific_type == "Standard Ocean" || specific_type == "Standard Garden" ||
+		specific_type == "Large Ocean" || specific_type == "Large Garden")
+	{
+		hydrosphere = "Water Oceans ";
+		int coverage{ 0 };
+		if (specific_type == "Standard Ocean" || specific_type == "Standard Garden")
+		{
+			coverage = (Dice::roll_D6(1) + 4) * 10;
+		}
+		else if (specific_type == "Large Ocean" || specific_type == "Large Garden")
+		{
+			coverage = (Dice::roll_D6(1) + 6) * 10;
+			if (coverage > 100)
+			{
+				coverage = 100;
+			}
+		}
+		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+	}
+	else if (specific_type == "Standard Greenhouse" || specific_type == "Large Greenhouse")
+	{
+		hydrosphere = "Highly Acidic Water ";
+		int coverage{ (Dice::roll_D6(2) - 7) * 10 };
+		if (coverage < 0)
+		{
+			coverage = 0;
+		}
+		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+	}
 
 	gen_Terrestrial_Moons();
 }

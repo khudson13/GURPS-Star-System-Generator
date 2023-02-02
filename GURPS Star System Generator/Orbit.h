@@ -31,6 +31,7 @@ private:
 	std::string atmosphere{ "" };		// type of atmosphere
 	double atmosphere_mass{ 0 };		// mass of atmosphere
 	double blackbody_temp{ 0 };			// inscrutable astronomical number needed for other calculations
+	std::string hydrosphere{ "" };		// liquid coverage
 	double parent_mass{ 0 };			// mass of parent star
 
 public:
@@ -47,6 +48,7 @@ public:
 	int count_Moonlets();			// output number of terrestrial planet's moonlets
 	std::string get_Atmosphere();	// output atmosphere type
 	double get_Distance();			// output orbital distance
+	std::string get_Hydrosphere();	// output hydrosphere
 	std::string get_Rings();		// output gas giant rings
 	std::string get_Type();			// output type of body
 	std::string get_Specific_Type();// output specific type

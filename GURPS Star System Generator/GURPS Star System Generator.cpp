@@ -119,6 +119,7 @@ int main()
             if (planet_type == "Tiny Terrestrial" || planet_type == "Small Terrestrial" || planet_type == "Standard Terrestrial" || planet_type == "Large Terrestrial")
             {
                 System_Out << "  Atmosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Atmosphere() << std::endl;
+                System_Out << "  Hydrosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Hydrosphere() << std::endl;
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
                     System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() << std::endl;
