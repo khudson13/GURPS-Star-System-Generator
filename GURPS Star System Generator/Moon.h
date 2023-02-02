@@ -18,11 +18,13 @@ private:
 	double blackbody_temp{ 0 };
 	double density{ 0 };
 	double diameter{ 0 };
+	bool gas_moon{ false };
 	double gravity{ 0 };
 	int hydro_coverage{ 0 };
 	double lunar_mass{ 0 };
 	double orbital_distance{ 0 };		// orbital distance in planetary diameters
 	double orbital_period{ 0 };
+	double parent_diameter{ 0 };
 	double parent_mass{ 0 };			// mass of parent planet
 	std::string planet_type{ "" };		// type of parent planet
 	int orbit_position{ 0 };			// index in parent's moons vec
@@ -30,7 +32,7 @@ private:
 	double stellar_mass{ 0 };			// mass of planet's primary star
 
 public:
-	Moon(std::string parent_type, int orbit_position, double star_mass, double planet_mass, double system_age);
+	Moon(std::string parent_type, int orbit_position, double star_mass, double planet_mass, double system_age, double p_diameter, bool gas_giant);
 
 	// INSERTS
 	void set_Position(int index);
@@ -52,5 +54,5 @@ public:
 	std::string get_Specific_Type();
 
 	// GENERATOR
-	void gen_Moon();		// create this moon
+	void gen_Moon(double bb_temp);		// create this moon
 };

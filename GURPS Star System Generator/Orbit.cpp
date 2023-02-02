@@ -70,6 +70,172 @@ void Orbit::gen_Gas_Giant(double l_min)
 		object_type = "Large Gas Giant";
 	}
 
+	int size_roll{ Dice::roll_D6(3) };
+	if (size_roll <= 8)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 10;
+			density = 0.42;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 100;
+			density = 0.18;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 600;
+			density = 0.31;
+		}
+	}
+	else if (size_roll >= 9 && size_roll <= 10)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 15;
+			density = 0.26;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 150;
+			density = 0.19;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 800;
+			density = 0.356;
+		}
+	}
+	else if (size_roll == 11)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 20;
+			density = 0.22;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 200;
+			density = 0.2;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 1000;
+			density = 0.4;
+		}
+	}
+	else if (size_roll == 12)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 30;
+			density = 0.19;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 250;
+			density = 0.22;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 1500;
+			density = 0.6;
+		}
+	}
+	else if (size_roll == 13)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 40;
+			density = 0.17;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 300;
+			density = 0.24;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 2000;
+			density = 0.8;
+		}
+	}
+	else if (size_roll == 14)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 50;
+			density = 0.17;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 350;
+			density = 0.25;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 2500;
+			density = 1;
+		}
+	}
+	else if (size_roll == 15)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 60;
+			density = 0.17;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 400;
+			density = 0.26;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 3000;
+			density = 1.2;
+		}
+	}
+	else if (size_roll == 16)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 70;
+			density = 0.17;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 450;
+			density = 0.27;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 3500;
+			density = 1.4;
+		}
+	}
+	else if (size_roll >= 17)
+	{
+		if (object_type == "Small Gas Giant")
+		{
+			planetary_mass = 80;
+			density = 0.17;
+		}
+		else if (object_type == "Medium Gas Giant")
+		{
+			planetary_mass = 500;
+			density = 0.29;
+		}
+		else if (object_type == "Large Gas Giant")
+		{
+			planetary_mass = 4000;
+			density = 1.6;
+		}
+	}
+
+	diameter = pow((planetary_mass / density), 1 / 3);
+
 	gen_Giant_Moons();
 }
 
@@ -131,8 +297,9 @@ void Orbit::gen_Giant_Moons()
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* moonptr{ new Moon(this->get_Type(), moons_vec.size(), parent_mass, planetary_mass, age)};
+			Moon* moonptr{ new Moon(this->get_Type(), middle_family.size(), parent_mass, planetary_mass, age, diameter, true)};
 			middle_family.push_back(moonptr);
+			moonptr->gen_Moon(blackbody_temp);
 		}
 	}
 
@@ -164,6 +331,7 @@ void Orbit::gen_Giant_Moons()
 void Orbit::gen_Terrestrial_Moons()
 {
 	int roll{ Dice::roll_D6(1) - 4 };
+	// modify based on proximity to star
 	if (orbital_distance <= 0.5)
 	{
 		roll = 0;
@@ -176,6 +344,7 @@ void Orbit::gen_Terrestrial_Moons()
 	{
 		roll -= 1;
 	}
+	// modify based on planet size
 	if (object_type == "Tiny Terrestrial")
 	{
 		roll -= 2;
@@ -188,17 +357,21 @@ void Orbit::gen_Terrestrial_Moons()
 	{
 		roll += 1;
 	}
+	// if it's a large moon
 	if (roll > 0)
 	{
 		for (int i{ 0 }; i < roll; ++i)
 		{
-			Moon* new_moon{ new Moon(this->get_Type(), moons_vec.size(), parent_mass, planetary_mass, age)};
+			Moon* new_moon{ new Moon(this->get_Type(), moons_vec.size(), parent_mass, planetary_mass, age, diameter, false)};
 			moons_vec.push_back(new_moon);
+			new_moon->gen_Moon(blackbody_temp);
 		}
 	}
+	// no large moon, check for moonlets
 	else
 	{
 		roll = Dice::roll_D6(1);
+		// modify based on proximity to star
 		if (orbital_distance <= 0.5)
 		{
 			roll = 0;
@@ -211,6 +384,7 @@ void Orbit::gen_Terrestrial_Moons()
 		{
 			roll -= 1;
 		}
+		// modify based on planet size
 		if (object_type == "Tiny Terrestrial")
 		{
 			roll -= 2;

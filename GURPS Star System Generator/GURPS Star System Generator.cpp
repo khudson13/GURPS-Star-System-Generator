@@ -116,6 +116,31 @@ int main()
                 System_Out << "  Inner Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Inner_Family() << " moonlets" << std::endl;
                 System_Out << "  Middle Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() << " moons" << std::endl;
                 System_Out << "  Outer Family: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Outer_Family() << " moonlets" << std::endl;
+                // output moons
+                if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() > 0)
+                {
+                    System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() << std::endl;
+                    System_Out << "* MOON DETAILS *" << std::endl << std::endl;
+                    for (int iii{ 0 }; iii < NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family(); ++iii)
+                    {
+                        System_Out << "Size " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Size() << std::endl;
+                        System_Out << "Type " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Specific_Type() << std::endl;
+                        System_Out << "Orbital Distance " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Orbital_Distance() << " miles" << std::endl;
+                        System_Out << "  Atmosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Atmosphere() << std::endl;
+                        System_Out << "  Atmospheric Pressure: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Atmo_Pressure() << " atmospheres" << std::endl;
+                        System_Out << "  Hydrosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Hydrosphere() << std::endl;
+                        double temp_fahrenheit{ ((static_cast<double>(NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Average_Temp()) - 273.15) * 9 / 5) + 32 };
+                        temp_fahrenheit *= 100;
+                        temp_fahrenheit = static_cast<double>((static_cast<int>(temp_fahrenheit))) / 100;
+                        System_Out << "  Average Surface Temp: " << temp_fahrenheit << " degrees Fahrenheit" << std::endl;
+                        System_Out << "  Diameter: " << (NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Diameter()) * 7930 << " miles" << std::endl;
+                        System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Gravity() << " Gs" << std::endl;
+                        System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Lunar_Mass() << " Earths" << std::endl;
+                        System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Orbital_Period() << " days" << std::endl;
+                        System_Out << std::endl;
+                    }
+                    System_Out << "* END MOONS *" << std::endl << std::endl;
+                }
             }
             if (planet_type == "Tiny Terrestrial" || planet_type == "Small Terrestrial" || planet_type == "Standard Terrestrial" || planet_type == "Large Terrestrial")
             {
@@ -130,15 +155,16 @@ int main()
                 System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gravity() << " Gs" << std::endl;
                 System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Mass() << " Earths" << std::endl;
                 System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Orbital_Period() << " years" << std::endl;
+                // output moons
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
                     System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() << std::endl;
                     System_Out << "* MOON DETAILS *" << std::endl << std::endl;
                     for (int iii{ 0 }; iii < NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons(); ++iii)
                     {
-                        System_Out << "Size " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Size() << std::endl;
-                        System_Out << "Type " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Specific_Type() << std::endl;
-                        System_Out << "Distance " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Orbital_Distance() << " Earth diameters" << std::endl;
+                        System_Out << "Size " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Size() << std::endl;
+                        System_Out << "Type " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Specific_Type() << std::endl;
+                        System_Out << "Orbital Distance " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Orbital_Distance() << " miles" << std::endl;
                         System_Out << "  Atmosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Atmosphere() << std::endl;
                         System_Out << "  Atmospheric Pressure: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Atmo_Pressure() << " atmospheres" << std::endl;
                         System_Out << "  Hydrosphere: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Hydrosphere() << std::endl;
@@ -149,8 +175,10 @@ int main()
                         System_Out << "  Diameter: " << (NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Diameter()) * 7930 << " miles" << std::endl;
                         System_Out << "  Gravity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Gravity() << " Gs" << std::endl;
                         System_Out << "  Mass: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Lunar_Mass() << " Earths" << std::endl;
-                        System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Orbital_Period() << " years" << std::endl;
+                        System_Out << "  Orbital Period: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Orbital_Period() << " days" << std::endl;
+                        System_Out << std::endl;
                     }
+                    System_Out << "* END MOONS *" << std::endl << std::endl;
                 }
                 else if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moonlets() > 0)
                 {

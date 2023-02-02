@@ -1,13 +1,15 @@
 #include "Moon.h"
 #include "DICE.h"
 
-Moon::Moon(std::string parent_type, int orbit_depth, double star_mass, double planet_mass, double system_age)
+Moon::Moon(std::string parent_type, int orbit_depth, double star_mass, double planet_mass, double system_age,double p_diameter, bool gas_giant)
 {
 	planet_type = parent_type;
 	orbit_position = orbit_depth;
 	parent_mass = planet_mass;
 	stellar_mass = star_mass;
 	age = system_age;
+	parent_diameter = p_diameter;
+	gas_moon = gas_giant;
 
 	// set size code so we can do this mathematically
 	int size_code{ 0 };
@@ -69,7 +71,7 @@ double Moon::get_Gravity() { return gravity; }
 std::string Moon::get_Hydrosphere() { return hydrosphere; }
 int Moon::get_Hydro_Coverage() { return hydro_coverage; }
 double Moon::get_Lunar_Mass() { return lunar_mass; }
-double Moon::get_Orbital_Distance() { return orbital_distance; }
+double Moon::get_Orbital_Distance() { return orbital_distance * diameter * 7930; }
 double Moon::get_Orbital_Period() { return orbital_period; }
 
 void Moon::set_Position(int index) { orbit_position = index; }
@@ -77,14 +79,16 @@ void Moon::set_Stellar_Mass(double mass) { stellar_mass = mass; }
 
 
 
-void Moon::gen_Moon()
+void Moon::gen_Moon(double bb_temp)
 {
+	blackbody_temp = bb_temp;
+
 	// find moon type
 	if (size == "Tiny")
 	{
 		if (blackbody_temp <= 140)
 		{
-			if (orbit_position == 0)
+			if (orbit_position == 0 && gas_moon)
 			{
 				if (Dice::roll_D6(1) <= 3)
 				{
@@ -561,18 +565,29 @@ void Moon::gen_Moon()
 	}
 
 	// define orbital distance
-	int distance_roll{ Dice::roll_D6(2) };
-	if (size_difference == 2)
+	if (gas_moon)
 	{
-		distance_roll += 2;
+		int moon_roll{ Dice::roll_D6(3) + 3 };
+		if (moon_roll >= 15)
+		{
+			moon_roll += Dice::roll_D6(2);
+		}
+		orbital_distance = static_cast<double>(moon_roll / 2) * parent_diameter;
 	}
-	else if (size_difference == 1)
+	else
 	{
-		distance_roll += 4;
+		int moon_roll{ Dice::roll_D6(2) };
+		if (size_difference == 2)
+		{
+			moon_roll += 2;
+		}
+		else if (size_difference == 1)
+		{
+			moon_roll += 4;
+		}
+		orbital_distance = static_cast<double>(moon_roll * 2.5) * parent_diameter;
 	}
-
-	orbital_distance = distance_roll;
 
 	// define orbital period
-	orbital_period = sqrt(pow(orbital_distance, 3) / parent_mass);
+	orbital_period = 0.166 * sqrt(pow(orbital_distance, 3) / (lunar_mass + parent_mass));
 }
