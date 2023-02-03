@@ -110,6 +110,11 @@ int main()
             }
             System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
             std::string planet_type{ NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() };
+            if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() == "Asteroid Belt")
+            {
+                System_Out << "  Resource Mod " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Resource_Mod() << " Code: " <<
+                    NewSystem.get_Star(i)->get_Orbit(ii)->get_Resource_Tag() << std::endl;
+            }
             // OUTPUT GAS GIANTS
             if (planet_type == "Small Gas Giant" || planet_type == "Medium Gas Giant" || planet_type == "Large Gas Giant")
             {
@@ -154,6 +159,8 @@ int main()
                         System_Out << "  Axial Tilt: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Axial_Tilt() << " degrees" << std::endl;
                         System_Out << "  Volcanism: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Volcanism() << std::endl;
                         System_Out << "  Tectonic Activity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Tectonics() << std::endl;
+                        System_Out << "  Resource Mod: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Resource_Mod();
+                        System_Out << "  Tag: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Resource_Tag() << std::endl;
                         System_Out << std::endl;
                     }
                     System_Out << "* END MOONS *" << std::endl << std::endl;
@@ -188,6 +195,8 @@ int main()
                 System_Out << "  Axial Tilt: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Axial_Tilt() << " degrees" << std::endl;
                 System_Out << "  Volcanism: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Volcanism() << std::endl;
                 System_Out << "  Tectonic Activity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Tectonics() << std::endl;
+                System_Out << "  Resource Mod: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Resource_Mod();
+                System_Out << "  Tag: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Resource_Tag() << std::endl;
                 // output moons
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
@@ -224,6 +233,8 @@ int main()
                         System_Out << "  Axial Tilt: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Axial_Tilt() << " degrees" << std::endl;
                         System_Out << "  Volcanism: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Volcanism() << std::endl;
                         System_Out << "  Tectonic Activity: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Tectonics() << std::endl;
+                        System_Out << "  Resource Mod: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Resource_Mod();
+                        System_Out << "  Tag: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Resource_Tag() << std::endl;
                         System_Out << std::endl;
                     }
                     System_Out << "* END MOONS *" << std::endl << std::endl;

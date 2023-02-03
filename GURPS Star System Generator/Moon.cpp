@@ -75,6 +75,8 @@ int Moon::get_Hydro_Coverage() { return hydro_coverage; }
 double Moon::get_Lunar_Mass() { return lunar_mass; }
 double Moon::get_Orbital_Distance() { return orbital_distance ; }
 double Moon::get_Orbital_Period() { return orbital_period; }
+int Moon::get_Resource_Mod() { return resource_mod; }
+std::string Moon::get_Resource_Tag() { return resource_tag; }
 bool Moon::get_Retrograde() { return retrograde_rotation; }
 std::string Moon::get_Tectonics() { return tectonic_activity; }
 bool Moon::get_Tidal_Lock() { return tidally_locked; }
@@ -814,5 +816,60 @@ void Moon::gen_Moon(double bb_temp)
 	else if (tectonic_roll > 18)
 	{
 		tectonic_activity = "Extreme";
+	}
+
+	// determine resource modifier
+	int resource_roll{ Dice::roll_D6(3) };
+	if (volcanism == "None")
+	{
+		resource_roll -= 2;
+	}
+	else if (volcanism == "Light")
+	{
+		resource_roll -= 1;
+	}
+	else if (volcanism == "Heavy")
+	{
+		resource_roll += 1;
+	}
+	else if (volcanism == "Extreme")
+	{
+		resource_roll += 2;
+	}
+
+	if (resource_roll <= 2)
+	{
+		resource_mod = -3;
+		resource_tag = "Scant";
+	}
+	else if (resource_roll >= 3 && resource_roll <= 4)
+	{
+		resource_mod = -2;
+		resource_tag = "Very Poor";
+	}
+	else if (resource_roll >= 5 && resource_roll <= 7)
+	{
+		resource_mod = -1;
+		resource_tag = "Poor";
+	}
+	else if (resource_roll >= 8 && resource_roll <= 13)
+	{
+		resource_mod = 0;
+		resource_tag = "Average";
+	}
+	else if (resource_roll >= 14 && resource_roll <= 16)
+	{
+		resource_mod = 1;
+		resource_tag = "Abundant";
+	}
+	else if (resource_roll >= 17 && resource_roll <= 18)
+	{
+		resource_mod = 2;
+		resource_tag = "Very Abundant";
+	}
+	else if (resource_roll >= 19)
+	{
+		resource_mod = 3;
+		resource_tag = "Rich";
 	}
 }

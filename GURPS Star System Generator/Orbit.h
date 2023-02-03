@@ -43,6 +43,8 @@ private:
 	double orbital_period{ 0 };				// orbital period in years
 	double planetary_mass{ 0 };				// mass of planet
 	double parent_mass{ 0 };				// mass of parent star
+	int resource_mod{ 0 };					// resource modifyer -5 to +5
+	std::string resource_tag{ "" };			// tag code for resource presence
 	bool retrograde_rotation{ false };		// whether this object rotates backward
 	std::string tectonic_activity{ "" };	// level of tectonic activity
 	int total_tidal_force{ 0 };				// tidal forces applied to planet
@@ -72,6 +74,8 @@ public:
 	double get_Day_Length();		// output length of day in hours
 	double get_Mass();				// output mass
 	double get_Orbital_Period();	// output orbital period
+	int get_Resource_Mod();			// output resource modifier
+	std::string get_Resource_Tag();	// output tag code for resource presence
 	bool get_Retrograde();			// check for retrograde rotation
 	std::string get_Rings();		// output gas giant rings
 	std::string get_Type();			// output type of body

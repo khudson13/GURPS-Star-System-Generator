@@ -33,6 +33,8 @@ std::string Orbit::get_Hydrosphere() { return hydrosphere; }
 double Orbit::get_Day_Length() { return length_of_day; }
 double Orbit::get_Mass() { return planetary_mass; }
 double Orbit::get_Orbital_Period() { return orbital_period; }
+int Orbit::get_Resource_Mod() { return resource_mod; }
+std::string Orbit::get_Resource_Tag() { return resource_tag; }
 bool Orbit::get_Retrograde() { return retrograde_rotation; }
 bool Orbit::get_Tidal_Lock() { return tidally_locked; }
 std::string Orbit::get_Rings() { return rings; }
@@ -53,7 +55,64 @@ void Orbit::set_Type(std::string type)
 // GENERATORS
 void Orbit::gen_Asteroid_Belt()
 {
-	// do nothing for now, reserved for later possible functionality
+	// determine resource modifier
+	int resource_roll{ Dice::roll_D6(3) };
+
+	if (resource_roll == 3)
+	{
+		resource_mod = -5;
+		resource_tag = "Worthless";
+	}
+	else if (resource_roll == 4)
+	{
+		resource_mod = -4;
+		resource_tag = "Very Scant";
+	}
+	else if (resource_roll == 5)
+	{
+		resource_mod = -3;
+		resource_tag = "Scant";
+	}
+	else if (resource_roll >= 6 && resource_roll <= 7)
+	{
+		resource_mod = -2;
+		resource_tag = "Very Poor";
+	}
+	else if (resource_roll >= 8 && resource_roll <= 9)
+	{
+		resource_mod = -1;
+		resource_tag = "Poor";
+	}
+	else if (resource_roll >= 10 && resource_roll <= 11)
+	{
+		resource_mod = 0;
+		resource_tag = "Average";
+	}
+	else if (resource_roll >= 12 && resource_roll <= 13)
+	{
+		resource_mod = 1;
+		resource_tag = "Abundant";
+	}
+	else if (resource_roll >= 14 && resource_roll <= 15)
+	{
+		resource_mod = 2;
+		resource_tag = "Very Abundant";
+	}
+	else if (resource_roll == 16)
+	{
+		resource_mod = 3;
+		resource_tag = "Rich";
+	}
+	else if (resource_roll == 17)
+	{
+		resource_mod = 4;
+		resource_tag = "Very Rich";
+	}
+	else if (resource_roll >= 18)
+	{
+		resource_mod = 5;
+		resource_tag = "Motherlode";
+	}
 }
 
 void Orbit::gen_Gas_Giant(double l_min)
@@ -1203,5 +1262,60 @@ void Orbit::gen_Terrestrial_Planet()
 	else if (tectonic_roll > 18)
 	{
 		tectonic_activity = "Extreme";
+	}
+
+	// determine resource modifier
+	int resource_roll{ Dice::roll_D6(3) };
+	if (volcanism == "None")
+	{
+		resource_roll -= 2;
+	}
+	else if (volcanism == "Light")
+	{
+		resource_roll -= 1;
+	}
+	else if (volcanism == "Heavy")
+	{
+		resource_roll += 1;
+	}
+	else if (volcanism == "Extreme")
+	{
+		resource_roll += 2;
+	}
+
+	if (resource_roll <= 2)
+	{
+		resource_mod = -3;
+		resource_tag = "Scant";
+	}
+	else if (resource_roll >= 3 && resource_roll <= 4)
+	{
+		resource_mod = -2;
+		resource_tag = "Very Poor";
+	}
+	else if (resource_roll >= 5 && resource_roll <= 7)
+	{
+		resource_mod = -1;
+		resource_tag = "Poor";
+	}
+	else if (resource_roll >= 8 && resource_roll <= 13)
+	{
+		resource_mod = 0;
+		resource_tag = "Average";
+	}
+	else if (resource_roll >= 14 && resource_roll <= 16)
+	{
+		resource_mod = 1;
+		resource_tag = "Abundant";
+	}
+	else if (resource_roll >= 17 && resource_roll <= 18)
+	{
+		resource_mod = 2;
+		resource_tag = "Very Abundant";
+	}
+	else if (resource_roll >= 19)
+	{
+		resource_mod = 3;
+		resource_tag = "Rich";
 	}
 }

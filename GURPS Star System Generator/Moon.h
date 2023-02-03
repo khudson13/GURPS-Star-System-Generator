@@ -30,6 +30,8 @@ private:
 	double parent_mass{ 0 };			// mass of parent planet
 	std::string planet_type{ "" };		// type of parent planet
 	int orbit_position{ 0 };			// index in parent's moons vec
+	int resource_mod{ 0 };				// resource modifier -5 to +5
+	std::string resource_tag{ "" };		// tag code for resource presence
 	bool retrograde_rotation{ false };	// whether the moon rotates backward
 	int size_difference{ 0 };			// difference in size between moon and parent
 	double stellar_mass{ 0 };			// mass of planet's primary star
@@ -59,6 +61,8 @@ public:
 	double get_Lunar_Mass();
 	double get_Orbital_Distance();
 	double get_Orbital_Period();
+	int get_Resource_Mod();
+	std::string get_Resource_Tag();
 	bool get_Retrograde();
 	std::string get_Size();
 	std::string get_Specific_Type();
