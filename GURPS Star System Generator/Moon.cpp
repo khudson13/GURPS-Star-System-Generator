@@ -63,6 +63,7 @@ Moon::Moon(std::string parent_type, int orbit_depth, double star_mass, double pl
 std::string Moon::get_Size() { return size; }
 std::string Moon::get_Specific_Type() { return specific_type; }
 std::string Moon::get_Atmosphere() { return atmosphere; }
+int Moon::get_Axial_Tilt() { return axial_tilt; }
 double Moon::get_Atmo_Pressure() { return atmospheric_pressure; }
 double Moon::get_Average_Temp() { return average_surface_temperature; }
 double Moon::get_Day_Length() { return length_of_day; }
@@ -74,7 +75,10 @@ int Moon::get_Hydro_Coverage() { return hydro_coverage; }
 double Moon::get_Lunar_Mass() { return lunar_mass; }
 double Moon::get_Orbital_Distance() { return orbital_distance ; }
 double Moon::get_Orbital_Period() { return orbital_period; }
+bool Moon::get_Retrograde() { return retrograde_rotation; }
+std::string Moon::get_Tectonics() { return tectonic_activity; }
 bool Moon::get_Tidal_Lock() { return tidally_locked; }
+std::string Moon::get_Volcanism() { return volcanism; }
 
 void Moon::set_Position(int index) { orbit_position = index; }
 void Moon::set_Stellar_Mass(double mass) { stellar_mass = mass; }
@@ -669,5 +673,142 @@ void Moon::gen_Moon(double bb_temp)
 	if ((length_of_day / 24) >= orbital_period)
 	{
 		tidally_locked = true;
+	}
+
+	// check for retrograde rotation
+	if (Dice::roll_D6(3) > 17)
+	{
+		retrograde_rotation = true;
+	}
+
+	// determine axial tilt
+	int axial_roll{ Dice::roll_D6(3) };
+	if (axial_roll >= 3 && axial_roll <= 6)
+	{
+		axial_tilt = Dice::roll_D6(2) - 2;
+	}
+	else if (axial_roll >= 7 && axial_roll <= 9)
+	{
+		axial_tilt = 10 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 10 && axial_roll <= 12)
+	{
+		axial_tilt = 20 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 13 && axial_roll <= 14)
+	{
+		axial_tilt = 30 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 15 && axial_roll <= 16)
+	{
+		axial_tilt = 40 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 17 && axial_roll <= 18)
+	{
+		axial_roll = Dice::roll_D6(1);
+		if (axial_roll >= 1 && axial_roll <= 2)
+		{
+			axial_tilt = 50 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll >= 3 && axial_roll <= 4)
+		{
+			axial_tilt = 60 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll == 5)
+		{
+			axial_tilt = 70 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll == 6)
+		{
+			axial_tilt = 80 + (Dice::roll_D6(2) - 2);
+		}
+	}
+
+	// determine volcanism
+	int volcanism_roll{ Dice::roll_D6(3) };
+	volcanism_roll += static_cast<int>((gravity / age) * 40);
+	if (specific_type == "Tiny Sulfur")
+	{
+		volcanism_roll += 60;
+	}
+	else if (planet_type == "Small Gas Giant" || planet_type == "Medium Gas Giant" || planet_type == "Large Gas Giant")
+	{
+		volcanism_roll += 5;
+	}
+
+	if (volcanism_roll <= 16)
+	{
+		volcanism = "None";
+	}
+	else if (volcanism_roll >= 17 && volcanism_roll <= 20)
+	{
+		volcanism = "Light";
+	}
+	else if (volcanism_roll >= 21 && volcanism_roll <= 26)
+	{
+		volcanism = "Moderate";
+	}
+	else if (volcanism_roll >= 27 && volcanism_roll <= 70)
+	{
+		volcanism = "Heavy";
+	}
+	else if (volcanism_roll > 70)
+	{
+		volcanism = "Extreme";
+	}
+
+	// determine tectonic activity
+	int tectonic_roll{ Dice::roll_D6(3) };
+
+	if (volcanism == "None")
+	{
+		tectonic_roll -= 8;
+	}
+	else if (volcanism == "Light")
+	{
+		tectonic_roll -= 4;
+	}
+	else if (volcanism == "Heavy")
+	{
+		tectonic_roll += 4;
+	}
+	else if (volcanism == "Extreme")
+	{
+		tectonic_roll += 8;
+	}
+
+	if (hydro_coverage == 0)
+	{
+		tectonic_roll -= 4;
+	}
+	else if (hydro_coverage < 50)
+	{
+		tectonic_roll -= 2;
+	}
+
+	if (size == "Tiny" || size == "Small")
+	{
+		tectonic_roll = 0;
+	}
+
+	if (tectonic_roll <= 6)
+	{
+		tectonic_activity = "None";
+	}
+	else if (tectonic_roll >= 7 && tectonic_roll <= 10)
+	{
+		tectonic_activity = "Light";
+	}
+	else if (tectonic_roll >= 11 && tectonic_roll <= 14)
+	{
+		tectonic_activity = "Moderate";
+	}
+	else if (tectonic_roll >= 15 && tectonic_roll <= 18)
+	{
+		tectonic_activity = "Heavy";
+	}
+	else if (tectonic_roll > 18)
+	{
+		tectonic_activity = "Extreme";
 	}
 }

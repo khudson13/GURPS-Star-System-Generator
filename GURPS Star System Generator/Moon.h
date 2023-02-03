@@ -10,6 +10,7 @@ private:
 
 	// DETAIL DATA
 	double age{ 0 };					// age
+	int axial_tilt{ 0 };				// axial tilt in degrees
 	std::string atmosphere{ "" };
 	std::string hydrosphere{ "" };
 	double atmosphere_mass{ 0 };
@@ -29,10 +30,13 @@ private:
 	double parent_mass{ 0 };			// mass of parent planet
 	std::string planet_type{ "" };		// type of parent planet
 	int orbit_position{ 0 };			// index in parent's moons vec
+	bool retrograde_rotation{ false };	// whether the moon rotates backward
 	int size_difference{ 0 };			// difference in size between moon and parent
 	double stellar_mass{ 0 };			// mass of planet's primary star
+	std::string tectonic_activity{ "" };// level of tectonic activity
 	int total_tidal_force{ 0 };
 	bool tidally_locked{ false };
+	std::string volcanism{ "" };		// degree of volcanism
 
 public:
 	Moon(std::string parent_type, int orbit_position, double star_mass, double planet_mass, double system_age, double p_diameter, bool gas_giant);
@@ -45,6 +49,7 @@ public:
 	std::string get_Atmosphere();
 	double get_Atmo_Pressure();
 	double get_Average_Temp();
+	int get_Axial_Tilt();
 	double get_Day_Length();
 	double get_Density();
 	double get_Diameter();
@@ -54,9 +59,12 @@ public:
 	double get_Lunar_Mass();
 	double get_Orbital_Distance();
 	double get_Orbital_Period();
+	bool get_Retrograde();
 	std::string get_Size();
 	std::string get_Specific_Type();
+	std::string get_Tectonics();
 	bool get_Tidal_Lock();
+	std::string get_Volcanism();
 
 	// GENERATOR
 	void gen_Moon(double bb_temp);		// create this moon

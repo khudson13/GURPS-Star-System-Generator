@@ -23,6 +23,7 @@ int Orbit::count_Outer_Family() { return outer_family; }
 int Orbit::count_Moons() { return moons_vec.size(); }
 int Orbit::count_Moonlets() { return moonlets; }
 std::string Orbit::get_Atmosphere() { return atmosphere; }
+int Orbit::get_Axial_Tilt() { return axial_tilt; }
 double Orbit::get_Atmo_Pressure() { return atmospheric_pressure; }
 int Orbit::get_Average_Surface_Temp() { return average_surface_temperature; }
 double Orbit::get_Diameter() { return diameter; }
@@ -32,10 +33,13 @@ std::string Orbit::get_Hydrosphere() { return hydrosphere; }
 double Orbit::get_Day_Length() { return length_of_day; }
 double Orbit::get_Mass() { return planetary_mass; }
 double Orbit::get_Orbital_Period() { return orbital_period; }
+bool Orbit::get_Retrograde() { return retrograde_rotation; }
 bool Orbit::get_Tidal_Lock() { return tidally_locked; }
 std::string Orbit::get_Rings() { return rings; }
+std::string Orbit::get_Tectonics() { return tectonic_activity; }
 std::string Orbit::get_Type() { return object_type; }
 std::string Orbit::get_Specific_Type() { return specific_type; }
+std::string Orbit::get_Volcanism() { return volcanism; }
 
 Moon* Orbit::get_Gas_Moon(int index) { return middle_family[index]; }
 Moon* Orbit::get_Terrestrial_Moon(int index) { return moons_vec[index]; }
@@ -1053,5 +1057,151 @@ void Orbit::gen_Terrestrial_Planet()
 	if (((length_of_day / 24) / 365) >= orbital_period)
 	{
 		tidally_locked = true;
+	}
+
+	// check for retrograde rotation
+	if (Dice::roll_D6(3) > 13)
+	{
+		retrograde_rotation = true;
+	}
+
+	// determine axial tilt
+	int axial_roll{ Dice::roll_D6(3) };
+	if (axial_roll >= 3 && axial_roll <= 6)
+	{
+		axial_tilt = Dice::roll_D6(2) - 2;
+	}
+	else if (axial_roll >= 7 && axial_roll <= 9)
+	{
+		axial_tilt = 10 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 10 && axial_roll <= 12)
+	{
+		axial_tilt = 20 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 13 && axial_roll <= 14)
+	{
+		axial_tilt = 30 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 15 && axial_roll <= 16)
+	{
+		axial_tilt = 40 + (Dice::roll_D6(2) - 2);
+	}
+	else if (axial_roll >= 17 && axial_roll <= 18)
+	{
+		axial_roll = Dice::roll_D6(1);
+		if (axial_roll >= 1 && axial_roll <= 2)
+		{
+			axial_tilt = 50 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll >= 3 && axial_roll <= 4)
+		{
+			axial_tilt = 60 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll == 5)
+		{
+			axial_tilt = 70 + (Dice::roll_D6(2) - 2);
+		}
+		else if (axial_roll == 6)
+		{
+			axial_tilt = 80 + (Dice::roll_D6(2) - 2);
+		}
+	}
+
+	// determine volcanism
+	int volcanism_roll{ Dice::roll_D6(3) };
+	volcanism_roll += static_cast<int>((gravity / age) * 40);
+	if (moons_vec.size() == 1)
+	{
+		volcanism_roll += 5;
+	}
+	else if (moons_vec.size() > 1)
+	{
+		volcanism_roll += 10;
+	}
+	
+	if (volcanism_roll <= 16)
+	{
+		volcanism = "None";
+	}
+	else if (volcanism_roll >= 17 && volcanism_roll <= 20)
+	{
+		volcanism = "Light";
+	}
+	else if (volcanism_roll >= 21 && volcanism_roll <= 26)
+	{
+		volcanism = "Moderate";
+	}
+	else if (volcanism_roll >= 27 && volcanism_roll <= 70)
+	{
+		volcanism = "Heavy";
+	}
+	else if (volcanism_roll > 70)
+	{
+		volcanism = "Extreme";
+	}
+
+	// determine tectonic activity
+	int tectonic_roll{ Dice::roll_D6(3) };
+	
+	if (volcanism == "None")
+	{
+		tectonic_roll -= 8;
+	}
+	else if (volcanism == "Light")
+	{
+		tectonic_roll -= 4;
+	}
+	else if (volcanism == "Heavy")
+	{
+		tectonic_roll += 4;
+	}
+	else if (volcanism == "Extreme")
+	{
+		tectonic_roll += 8;
+	}
+
+	if (hydro_coverage == 0)
+	{
+		tectonic_roll -= 4;
+	}
+	else if (hydro_coverage < 50)
+	{
+		tectonic_roll -= 2;
+	}
+
+	if (moons_vec.size() == 1)
+	{
+		tectonic_roll += 2;
+	}
+	else if (moons_vec.size() > 1)
+	{
+		tectonic_roll += 4;
+	}
+
+	if (object_type == "Tiny Terrestrial" || object_type == "Small Terrestrial")
+	{
+		tectonic_roll = 0;
+	}
+
+	if (tectonic_roll <= 6)
+	{
+		tectonic_activity = "None";
+	}
+	else if (tectonic_roll >= 7 && tectonic_roll <= 10)
+	{
+		tectonic_activity = "Light";
+	}
+	else if (tectonic_roll >= 11 && tectonic_roll <= 14)
+	{
+		tectonic_activity = "Moderate";
+	}
+	else if (tectonic_roll >= 15 && tectonic_roll <= 18)
+	{
+		tectonic_activity = "Heavy";
+	}
+	else if (tectonic_roll > 18)
+	{
+		tectonic_activity = "Extreme";
 	}
 }

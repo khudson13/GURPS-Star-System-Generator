@@ -28,6 +28,7 @@ private:
 
 	// detail data
 	double age{ 0 };						// age of system
+	int axial_tilt{ 0 };					// axial tilt in degrees
 	std::string atmosphere{ "" };			// type of atmosphere
 	double atmospheric_pressure{ 0 };		// atmospheric pressure
 	int average_surface_temperature{ 0 };	// average temp in Kelvin
@@ -42,8 +43,11 @@ private:
 	double orbital_period{ 0 };				// orbital period in years
 	double planetary_mass{ 0 };				// mass of planet
 	double parent_mass{ 0 };				// mass of parent star
+	bool retrograde_rotation{ false };		// whether this object rotates backward
+	std::string tectonic_activity{ "" };	// level of tectonic activity
 	int total_tidal_force{ 0 };				// tidal forces applied to planet
 	bool tidally_locked{ false };			// tidal lock
+	std::string volcanism{ "" };			// level of volcanism
 
 public:
 	Orbit(double distance, double parent_luminosity, double parent_mass, double age);
@@ -58,6 +62,7 @@ public:
 	int count_Moons();				// output number of terrestrial planet's moons
 	int count_Moonlets();			// output number of terrestrial planet's moonlets
 	std::string get_Atmosphere();	// output atmosphere type
+	int get_Axial_Tilt();			// output axial tilt
 	double get_Atmo_Pressure();		// output atmospheric pressure in Earth atmospheres
 	int get_Average_Surface_Temp();	// output surface temp
 	double get_Diameter();			// output planet diameter
@@ -67,10 +72,13 @@ public:
 	double get_Day_Length();		// output length of day in hours
 	double get_Mass();				// output mass
 	double get_Orbital_Period();	// output orbital period
+	bool get_Retrograde();			// check for retrograde rotation
 	std::string get_Rings();		// output gas giant rings
 	std::string get_Type();			// output type of body
 	std::string get_Specific_Type();// output specific type
+	std::string get_Tectonics();	// output tectonic activity
 	bool get_Tidal_Lock();			// check for tidal lock
+	std::string get_Volcanism();	// output volcanism
 
 	Moon* get_Gas_Moon(int index);			// get a gas giant's moon
 	Moon* get_Terrestrial_Moon(int index);	// get a planet's moon
