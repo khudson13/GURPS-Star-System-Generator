@@ -323,8 +323,8 @@ void Moon::gen_Moon(double bb_temp)
 	}
 
 	// find hydrosphere
-	if (specific_type == "Tiny Rock-ball" || specific_type == "Tiny Ice-ball" || specific_type == "Small Rock-ball" ||
-		specific_type == "Small Hadean (p.76)" || specific_type == "Standard Hadean (p.76)" ||
+	if (specific_type == "Tiny Rock-ball" || specific_type == "Tiny Ice-ball" || specific_type == "Tiny Sulfur" || 
+		specific_type == "Small Rock-ball" || specific_type == "Small Hadean (p.76)" || specific_type == "Standard Hadean (p.76)" ||
 		specific_type == "Standard Cthonian  (p.76)")
 	{
 		hydrosphere = "None";
@@ -393,6 +393,10 @@ void Moon::gen_Moon(double bb_temp)
 	{
 		blackbody_correction = 0.97;
 	}
+	else if (specific_type == "Tiny Sulfur")
+	{
+		blackbody_correction = 0.77;
+	}
 	else if (specific_type == "Small Hadean (p.76)")
 	{
 		blackbody_correction = 0.67;
@@ -449,8 +453,8 @@ void Moon::gen_Moon(double bb_temp)
 	//***
 
 	// find density
-	if (specific_type == "Tiny Ice-ball" || specific_type == "Small Hadean (p.76)" || specific_type == "Small Ice-ball" ||
-		specific_type == "Standard Hadean (p.76)" || specific_type == "Standard Ammonia")
+	if (specific_type == "Tiny Ice-ball" || specific_type == "Tiny Sulfur" || specific_type == "Small Hadean (p.76)" || 
+		specific_type == "Small Ice-ball" || specific_type == "Standard Hadean (p.76)" || specific_type == "Standard Ammonia")
 	{
 		int density_roll{ Dice::roll_D6(3) };
 		if (density_roll >= 3 && density_roll <= 6)
