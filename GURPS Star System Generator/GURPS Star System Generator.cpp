@@ -14,6 +14,7 @@ Currently this always creates the same filename. Probably best to let the user e
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 //********************
 // PERSONAL INCLUDES *
@@ -57,6 +58,7 @@ int main()
 
 
     // OUTPUT RESULTS
+    System_Out << std::fixed << std::setprecision(2) << std::endl;
     System_Out << "Num of Stars: " << NewSystem.get_Num_of_Stars() << std::endl;
     System_Out << "System Age: " << NewSystem.get_Age() << " billion years" << std::endl << std::endl;
 
@@ -100,13 +102,13 @@ int main()
     System_Out << std::endl << std::endl << "*** ORBITAL BODY DETAILS ***" << std::endl << std::endl;
     for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
     {
-        System_Out << "Star: " << i + 1 << std::endl << std::endl;
+        System_Out << "STAR: " << i + 1 << std::endl << std::endl;
         for (int ii{ 0 }; ii < NewSystem.get_Star(i)->get_Num_of_Orbits(); ++ii)
         {
-            System_Out << "Orbit " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() << std::endl;
+            System_Out << "ORBIT " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() << std::endl;
             if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type() != "")
             {
-                System_Out << "Orbit " << ii + 1 << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type() << std::endl;
+                System_Out << "  Type: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Specific_Type() << std::endl;
             }
             System_Out << "  Distance: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Distance() << " AU" << std::endl;
             std::string planet_type{ NewSystem.get_Star(i)->get_Orbit(ii)->get_Type() };
@@ -127,7 +129,7 @@ int main()
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() > 0)
                 {
                     System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family() << std::endl;
-                    System_Out << "* MOON DETAILS *" << std::endl << std::endl;
+                    System_Out << "***\nMOON DETAILS\n***" << std::endl << std::endl;
                     for (int iii{ 0 }; iii < NewSystem.get_Star(i)->get_Orbit(ii)->count_Middle_Family(); ++iii)
                     {
                         System_Out << "Size " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Size() << std::endl;
@@ -163,7 +165,7 @@ int main()
                         System_Out << "  Tag: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Gas_Moon(iii)->get_Resource_Tag() << std::endl;
                         System_Out << std::endl;
                     }
-                    System_Out << "* END MOONS *" << std::endl << std::endl;
+                    System_Out << "***\nEND MOONS\n***" << std::endl << std::endl;
                 }
             }
             // OUTPUT TERRESTRIAL PLANETS
@@ -190,7 +192,7 @@ int main()
                 }
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->get_Retrograde())
                 {
-                    System_Out << " RETROGRADE ROTATION" << std::endl;
+                    System_Out << "  RETROGRADE ROTATION" << std::endl;
                 }
                 System_Out << "  Axial Tilt: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Axial_Tilt() << " degrees" << std::endl;
                 System_Out << "  Volcanism: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Volcanism() << std::endl;
@@ -201,7 +203,7 @@ int main()
                 if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() > 0)
                 {
                     System_Out << "  Moons: " << NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons() << std::endl;
-                    System_Out << "* MOON DETAILS *" << std::endl << std::endl;
+                    System_Out << "***\nMOON DETAILS\n***" << std::endl << std::endl;
                     for (int iii{ 0 }; iii < NewSystem.get_Star(i)->get_Orbit(ii)->count_Moons(); ++iii)
                     {
                         System_Out << "Size " << ": " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Size() << std::endl;
@@ -237,7 +239,7 @@ int main()
                         System_Out << "  Tag: " << NewSystem.get_Star(i)->get_Orbit(ii)->get_Terrestrial_Moon(iii)->get_Resource_Tag() << std::endl;
                         System_Out << std::endl;
                     }
-                    System_Out << "* END MOONS *" << std::endl << std::endl;
+                    System_Out << "***\nEND MOONS\n***" << std::endl << std::endl;
                 }
                 else if (NewSystem.get_Star(i)->get_Orbit(ii)->count_Moonlets() > 0)
                 {
