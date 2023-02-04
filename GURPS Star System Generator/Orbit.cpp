@@ -765,7 +765,12 @@ void Orbit::gen_Terrestrial_Planet()
 	}
 	else if (specific_type == "Small Ice-ball")
 	{
-		hydrosphere = "Liquid Hydrocarbons " + std::to_string((Dice::roll_D6(1) + 2) * 10) + "% Surface Coverage";
+		int coverage{ (Dice::roll_D6(1) + 2) * 10 };
+		if (coverage > 100)
+		{
+			coverage = 100;
+		}
+		hydrosphere = "Liquid Hydrocarbons " + std::to_string(coverage) + "% Surface Coverage";
 		hydro_coverage = coverage;
 	}
 	else if (specific_type == "Standard Ammonia" || specific_type == "Large Ammonia")
@@ -1029,6 +1034,10 @@ void Orbit::gen_Terrestrial_Planet()
 		{
 			atmospheric_pressure = atmosphere_mass * gravity * 5;
 		}
+	}
+	if (atmospheric_pressure < 0.01)
+	{
+		atmosphere = "None";
 	}
 
 	// define orbital period

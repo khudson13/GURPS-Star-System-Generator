@@ -333,7 +333,13 @@ void Moon::gen_Moon(double bb_temp)
 	}
 	else if (specific_type == "Small Ice-ball")
 	{
-		hydrosphere = "Liquid Hydrocarbons " + std::to_string((Dice::roll_D6(1) + 2) * 10) + "% Surface Coverage";
+		int coverage{ (Dice::roll_D6(1) + 2) * 10 };
+		if (coverage > 100)
+		{
+			coverage = 100;
+		}
+		hydrosphere = "Liquid Hydrocarbons " + std::to_string(coverage) + "% Surface Coverage";
+		hydro_coverage = coverage;
 	}
 	else if (specific_type == "Standard Ammonia")
 	{
@@ -344,6 +350,7 @@ void Moon::gen_Moon(double bb_temp)
 			coverage = 100;
 		}
 		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+		hydro_coverage = coverage;
 	}
 	else if (specific_type == "Standard Ice-ball")
 	{
@@ -354,6 +361,7 @@ void Moon::gen_Moon(double bb_temp)
 			coverage = 0;
 		}
 		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+		hydro_coverage = coverage;
 	}
 	else if (specific_type == "Standard Ocean" || specific_type == "Standard Garden")
 	{
@@ -383,6 +391,11 @@ void Moon::gen_Moon(double bb_temp)
 			coverage = 0;
 		}
 		hydrosphere += std::to_string(coverage) + "% Surface Coverage";
+		hydro_coverage = coverage;
+	}
+	if (hydro_coverage == 0)
+	{
+		hydrosphere = "None";
 	}
 
 	// define climate
@@ -574,6 +587,10 @@ void Moon::gen_Moon(double bb_temp)
 		{
 			atmospheric_pressure = atmosphere_mass * gravity;
 		}
+	}
+	if (atmospheric_pressure < 0.01)
+	{
+		atmosphere = "None";
 	}
 
 	// define orbital distance
