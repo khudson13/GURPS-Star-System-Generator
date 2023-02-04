@@ -108,7 +108,7 @@ void Moon::gen_Moon(double bb_temp)
 				specific_type = "Tiny Ice-ball";
 			}
 		}
-		else if (blackbody_temp > 140)
+		else //if (blackbody_temp > 140)
 		{
 			specific_type = "Tiny Rock-ball";
 		}
