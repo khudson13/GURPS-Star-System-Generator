@@ -43,7 +43,7 @@ int main()
     do*/    //" + std::to_string(system_count + 1) + "
     //{
         StarSystemStats NewSystem; // instantiate system
-        std::ofstream System_Out("C:/Users/Kenda/Desktop/System_Data.txt");
+        std::ofstream System_Out("C:/Users/Kendall/Desktop/System_Data.txt");
 
         // GENERATE STAR(S)
         for (int i{ 0 }; i < NewSystem.get_Num_of_Stars(); ++i)
